@@ -255,6 +255,7 @@ class MainWindow(QMainWindow):
         self.product_list.setHorizontalHeaderLabels(["Name", "Barcode", "Price", "Stock"])
         self.product_list.verticalHeader().setVisible(False)
         self.product_list.setSelectionBehavior(QTableWidget.SelectRows)
+        self.product_list.setEditTriggers(QTableWidget.NoEditTriggers)  # Disable editing
         self.product_list.itemDoubleClicked.connect(self.add_product_from_list)
         search_layout.addWidget(self.product_list)
         
@@ -287,9 +288,10 @@ class MainWindow(QMainWindow):
         self.sale_table.setHorizontalHeaderLabels(["Product", "Barcode", "Price", "Quantity", "Total", "Actions"])
         self.sale_table.verticalHeader().setVisible(False)
         
-        # Enable editing only for quantity column
-        self.sale_table.setEditTriggers(QTableWidget.DoubleClicked | QTableWidget.EditKeyPressed)
-        self.sale_table.itemChanged.connect(self.handle_sale_item_change)
+        # Disable editing for all columns
+        self.sale_table.setEditTriggers(QTableWidget.NoEditTriggers)
+        # Remove the itemChanged connection since editing is disabled
+        # self.sale_table.itemChanged.connect(self.handle_sale_item_change)
         
         # Improve table styling
         self.sale_table.setStyleSheet("""
@@ -611,10 +613,26 @@ class MainWindow(QMainWindow):
         self.top_products_table = QTableWidget()
         self.top_products_table.setObjectName("top_products_table")
         self.top_products_table.setColumnCount(4)
+        
+        # Force the header to be visible and set its style
+        header = self.top_products_table.horizontalHeader()
+        header.setVisible(True)
+        header.setStyleSheet("""
+            QHeaderView::section {
+                background-color: #f8fafc;
+                padding: 12px;
+                border: none;
+                font-weight: bold;
+                color: #475569;
+                border-bottom: 2px solid #e2e8f0;
+            }
+        """)
+        
+        # Set column headers
         self.top_products_table.setHorizontalHeaderLabels([
             "Product", "Quantity Sold", "Revenue (DZD)", "Profit (DZD)"
         ])
-        self.top_products_table.horizontalHeader().setStretchLastSection(True)
+        header.setStretchLastSection(True)
         self.top_products_table.setAlternatingRowColors(True)
         self.top_products_table.verticalHeader().setVisible(False)
         self.top_products_table.setSelectionBehavior(QTableWidget.SelectRows)
@@ -656,6 +674,7 @@ class MainWindow(QMainWindow):
         ])
         self.sales_history_table.horizontalHeader().setStretchLastSection(True)
         self.sales_history_table.setSelectionBehavior(QTableWidget.SelectRows)
+        self.sales_history_table.setEditTriggers(QTableWidget.NoEditTriggers)  # Disable editing
         right_layout.addWidget(self.sales_history_table)
         
         # Style the right panel
