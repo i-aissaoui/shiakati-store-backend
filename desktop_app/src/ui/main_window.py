@@ -885,9 +885,15 @@ class MainWindow(QMainWindow):
                             width: 100%;
                             text-align: center;
                         }
-                        .store-name {
-                            font-size: 10pt;
-                            margin-bottom: 6mm;
+                        .store-logo {
+                            width: 15mm !important;
+                            max-width: 15mm !important;
+                            height: 15mm !important;
+                            max-height: 15mm !important;
+                            margin-bottom: 3mm;
+                            display: block;
+                            margin-left: auto;
+                            margin-right: auto;
                         }
                         .header {
                             text-align: center;
@@ -927,14 +933,31 @@ class MainWindow(QMainWindow):
                 <body>
                     <div class="content">"""
 
-            # Store name - centered
-            html += '<div class="store-name">Shiakati Store</div>'
+            # Convert ICO to base64 for reliable embedding
+            from PIL import Image
+            import io
+            import base64
+            
+            # Load and resize the ICO file
+            logo_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'resources', 'images', 'logo.ico'))
+            img = Image.open(logo_path)
+            # Set to a larger size for better visibility
+            img = img.resize((60, 60), Image.Resampling.LANCZOS)
+            
+            # Convert to base64
+            buffered = io.BytesIO()
+            img.save(buffered, format="PNG")
+            img_str = base64.b64encode(buffered.getvalue()).decode()
+            
+            # Add logo and store name
+            html += f'<img src="data:image/png;base64,{img_str}" class="store-logo" />'
+            html += '<div style="text-align: center; font-weight: bold; margin-bottom: 2mm; font-size: 9pt;">Shiakati شياكتي</div></br>'
 
             # Add date and sale number - centered in header section
             date_str = QDateTime.fromString(sale_data['sale_time'], Qt.ISODateWithMs).toString('yyyy-MM-dd HH:mm')
             html += '<div class="header">'
             html += f"Date: {date_str}\n"
-            html += f"Sale {sale_data['id']}\n\n"  # Added extra newline
+            html += f"Sale : {sale_data['id']}\n\n"  # Added extra newline
             html += '</div>'
 
             # Start items section
@@ -943,8 +966,8 @@ class MainWindow(QMainWindow):
             # Add separator line at top
             html += '<span style="font-weight: bold;">───────────────────────────────────────</span>\n'
             
-            # Add header for items with proper alignment
-            html += "Item           Qty   Price   Total\n"
+            # Add header with spacings matching the data format
+            html += 'Item              Qty   Price  Total\n'
             html += '<span style="font-weight: bold;">───────────────────────────────────────</span>\n'
 
             # Add items with proper spacing
@@ -958,48 +981,50 @@ class MainWindow(QMainWindow):
                 total_items += quantity
                 total_amount += total
                 
-                # Format numbers with consistent decimal places
-                qty_str = f"{int(quantity)}".rjust(4)  # No decimals for quantity
-                price_str = f"{price:.2f}".rjust(7)   # Always show 2 decimals
-                total_str = f"{total:.2f}".rjust(7)   # Always show 2 decimals
+                # Format numbers with consistent decimal places and spacing
+                name_width = 16  # Width for product name
+                qty_str = f"{int(quantity)}".rjust(3)     # Width for quantity
+                price_str = f"{price:.2f}".rjust(7)      # Width for price
+                total_str = f"{total:.2f}".rjust(6)      # Width for total - pulled in
                 
-                # Handle long product names by word wrapping
-                name_width = 14
+                # Handle long product names by breaking into multiple lines
                 if len(product_name) > name_width:
-                    # Try to split on space to avoid breaking words
+                    # Split product name into words
                     words = product_name.split()
                     current_line = ""
                     first_line = True
                     
                     for word in words:
-                        if len(current_line) + len(word) + 1 <= name_width:
-                            current_line += (word + " ")
+                        if len(current_line) + len(word) + 1 <= name_width or len(current_line) == 0:
+                            if len(current_line) > 0:
+                                current_line += " "
+                            current_line += word
                         else:
                             if first_line:
                                 # Print first line with values
-                                html += f"{current_line.ljust(name_width)}{qty_str} {price_str} {total_str}\n"
+                                html += f"{current_line.ljust(name_width)}{qty_str}   {price_str}  {total_str}\n"
                                 first_line = False
                             else:
                                 # Print continuation line
-                                html += f"{current_line.ljust(name_width + 21)}\n"
-                            current_line = word + " "
-                            
+                                html += f"{current_line.ljust(name_width)}\n"
+                            current_line = word
+                    
                     # Print any remaining text
                     if current_line:
                         if first_line:
-                            html += f"{current_line.ljust(name_width)}{qty_str} {price_str} {total_str}\n"
+                            html += f"{current_line.ljust(name_width)}{qty_str}    {price_str}    {total_str}\n"
                         else:
-                            html += f"{current_line.ljust(name_width + 21)}\n"
+                            html += f"{current_line.ljust(name_width)}\n"
                 else:
                     # Single line format with consistent spacing
-                    html += f"{product_name.ljust(name_width)}{qty_str} {price_str} {total_str}\n"
+                    html += f"{product_name.ljust(name_width)}{qty_str}   {price_str}  {total_str}\n"
 
             # Add separator line
             html += '<span style="font-weight: bold;">───────────────────────────────────────</span>\n\n'
             html += '</div>'
-
-            # Add centered total
-            html += f'<div class="total">Total: {total_amount:.2f} DZD</div>'
+            
+            # Add centered total with proper spacing
+            html += f'<div class="total">Total: {total_amount:>8.2f} DZD</div>'
 
             # Add centered footer
             html += '<div class="footer">'
@@ -2019,6 +2044,8 @@ class MainWindow(QMainWindow):
             # Get product info
             barcode = self.sale_table.item(row, 1).text().strip()
             price = self.parse_price(self.sale_table.item(row, 2).text())
+
+           
 
             # Check available stock
             available_stock = 0
