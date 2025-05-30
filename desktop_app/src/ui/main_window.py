@@ -877,7 +877,7 @@ class MainWindow(QMainWindow):
                             width: 72mm;
                             margin: 0;
                             padding: 2mm;
-                            font-size: 7pt;
+                            font-size: 6.5pt;
                             line-height: 1.1;
                             white-space: pre;
                         }
@@ -944,8 +944,8 @@ class MainWindow(QMainWindow):
             html += '<span style="font-weight: bold;">───────────────────────────────────────</span>\n'
             
             # Add header for items with proper alignment
-            html += "Item            Qty  Price  Total\n"
-            html += '<span style="font-weight: bold;">───────────────────────────────────</span>\n'
+            html += "Item           Qty   Price   Total\n"
+            html += '<span style="font-weight: bold;">───────────────────────────────────────</span>\n'
 
             # Add items with proper spacing
             total_items = 0
@@ -958,29 +958,41 @@ class MainWindow(QMainWindow):
                 total_items += quantity
                 total_amount += total
                 
-                # Handle long product names with line wrapping
-                name_width = 16
+                # Format numbers with consistent decimal places
+                qty_str = f"{int(quantity)}".rjust(4)  # No decimals for quantity
+                price_str = f"{price:.2f}".rjust(7)   # Always show 2 decimals
+                total_str = f"{total:.2f}".rjust(7)   # Always show 2 decimals
+                
+                # Handle long product names by word wrapping
+                name_width = 14
                 if len(product_name) > name_width:
-                    # Split into multiple lines
-                    first_line = product_name[:name_width]
-                    remaining = product_name[name_width:]
-                    # Format the first line with values
-                    qty_str = f"{quantity:3.1f}".rjust(4)
-                    price_str = f"{price:6.2f}".rjust(6)
-                    total_str = f"{total:6.2f}".rjust(6)
-                    html += f"{first_line.ljust(14)}{qty_str}  {price_str}  {total_str}\n"
+                    # Try to split on space to avoid breaking words
+                    words = product_name.split()
+                    current_line = ""
+                    first_line = True
                     
-                    # Add remaining text on next line
-                    while remaining:
-                        line = remaining[:name_width]
-                        remaining = remaining[name_width:]
-                        html += f"{line.ljust(name_width + 16)}\n"  # Add padding to align with first line
+                    for word in words:
+                        if len(current_line) + len(word) + 1 <= name_width:
+                            current_line += (word + " ")
+                        else:
+                            if first_line:
+                                # Print first line with values
+                                html += f"{current_line.ljust(name_width)}{qty_str} {price_str} {total_str}\n"
+                                first_line = False
+                            else:
+                                # Print continuation line
+                                html += f"{current_line.ljust(name_width + 21)}\n"
+                            current_line = word + " "
+                            
+                    # Print any remaining text
+                    if current_line:
+                        if first_line:
+                            html += f"{current_line.ljust(name_width)}{qty_str} {price_str} {total_str}\n"
+                        else:
+                            html += f"{current_line.ljust(name_width + 21)}\n"
                 else:
-                    # Single line format
-                    qty_str = f"{quantity:3.1f}".rjust(4)
-                    price_str = f"{price:6.2f}".rjust(6)
-                    total_str = f"{total:6.2f}".rjust(6)
-                    html += f"{product_name.ljust(14)}{qty_str}  {price_str}  {total_str}\n"
+                    # Single line format with consistent spacing
+                    html += f"{product_name.ljust(name_width)}{qty_str} {price_str} {total_str}\n"
 
             # Add separator line
             html += '<span style="font-weight: bold;">───────────────────────────────────────</span>\n\n'
