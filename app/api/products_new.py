@@ -26,6 +26,13 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Product not found")
     return product
 
+@router.get("/barcode/{barcode}", response_model=ProductDetailOut)
+def get_product_by_barcode(barcode: str, db: Session = Depends(get_db)):
+    product = db.query(models.Product).filter(models.Product.barcode == barcode).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return product
+
 @router.post("/", response_model=ProductOut)
 def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     db_product = models.Product(**product.dict())

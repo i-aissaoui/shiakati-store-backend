@@ -1,17 +1,44 @@
-from pydantic import BaseModel
-from typing import Optional
+from pydantic import BaseModel, Field, validator
+from typing import Optional, List
 from datetime import datetime
+from decimal import Decimal
+
+class SaleItemBase(BaseModel):
+    variant_id: int
+    quantity: Decimal = Field(gt=0)  # Allow any positive number
+    price: Decimal = Field(gt=0)  # Allow any positive number
 
 class SaleBase(BaseModel):
-    variant_id: int
-    quantity: int = 1
+    items: List[SaleItemBase]
+    total: Decimal = Field(ge=0)  # Total amount must be >= 0
+
+    @validator('total')
+    def validate_total(cls, v, values):
+        if 'items' in values:
+            total = sum(item.price * item.quantity for item in values['items'])
+            if abs(v - total) > Decimal('0.01'):  # Allow for small rounding differences
+                raise ValueError("Total must match sum of item prices")
+        return v
 
 class SaleCreate(SaleBase):
     pass
 
-class SaleOut(SaleBase):
+class SaleItemOut(SaleItemBase):
     id: int
-    sale_time: datetime
+    product_name: str  # This will be populated from the variant.product relationship
     
     class Config:
-        orm_mode = True 
+        from_attributes = True
+
+class SaleOut(BaseModel):
+    id: int
+    sale_time: datetime
+    total: Decimal
+    items: List[SaleItemOut]
+
+    class Config:
+        from_attributes = True
+        json_encoders = {
+            datetime: lambda v: v.isoformat(),
+            Decimal: lambda v: float(v)  # Convert to float for JSON serialization
+        }

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from app.db.session import SessionLocal
 from app.db import models
 from app.schemas.variant import VariantCreate, VariantOut, VariantUpdate
@@ -25,23 +25,63 @@ def get_variant(variant_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Variant not found")
     return variant
 
+@router.get("/barcode/{barcode}", response_model=VariantOut) 
+def get_variant_by_barcode(barcode: str, db: Session = Depends(get_db)):
+    variant = db.query(models.Variant).filter(models.Variant.barcode == barcode).first()
+    if not variant:
+        raise HTTPException(status_code=404, detail="Variant not found")
+    return variant
+
 @router.post("/", response_model=VariantOut)
 def create_variant(variant: VariantCreate, db: Session = Depends(get_db)):
-    # Check if product exists
-    product = db.query(models.Product).filter(models.Product.id == variant.product_id).first()
-    if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
-    
-    # Check if barcode is unique
-    existing_variant = db.query(models.Variant).filter(models.Variant.barcode == variant.barcode).first()
-    if existing_variant:
-        raise HTTPException(status_code=400, detail="Barcode already exists")
-    
-    db_variant = models.Variant(**variant.dict())
-    db.add(db_variant)
-    db.commit()
-    db.refresh(db_variant)
-    return db_variant
+    try:
+        # Verify product exists
+        product = db.query(models.Product).filter(models.Product.id == variant.product_id).first()
+        if not product:
+            raise HTTPException(status_code=404, detail="Product not found")
+
+        # Use provided barcode if any, otherwise generate one
+        barcode = variant.barcode
+        if not barcode:
+            from app.utils.barcode import generate_unique_barcode
+            barcode = generate_unique_barcode(db, prefix=str(variant.product_id).zfill(3))
+        else:
+            # Check if barcode is unique
+            existing_variant = db.query(models.Variant).filter(models.Variant.barcode == barcode).first()
+            if existing_variant:
+                raise HTTPException(status_code=400, detail="Barcode already exists")
+
+        # Convert decimal values for precision
+        from decimal import Decimal, ROUND_HALF_UP
+        price = Decimal(str(variant.price)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        quantity = Decimal(str(variant.quantity)).quantize(Decimal('0.003'), rounding=ROUND_HALF_UP)
+
+        # Create variant
+        db_variant = models.Variant(
+            product_id=variant.product_id,
+            size=variant.size,
+            color=variant.color,
+            barcode=barcode,
+            price=price,
+            quantity=quantity
+        )
+        
+        db.add(db_variant)
+        db.commit()
+        db.refresh(db_variant)
+        
+        # Load relationships for response
+        db_variant = db.query(models.Variant).options(
+            joinedload(models.Variant.product).joinedload(models.Product.category)
+        ).filter(models.Variant.id == db_variant.id).first()
+        
+        return db_variant
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Error creating variant: {str(e)}")
 
 @router.put("/{variant_id}", response_model=VariantOut)
 def update_variant(variant_id: int, variant: VariantUpdate, db: Session = Depends(get_db)):
