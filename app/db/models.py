@@ -47,7 +47,7 @@ class Variant(Base):
     # Relationships
     product = relationship("Product", back_populates="variants")
     sale_items = relationship("SaleItem", back_populates="variant")
-    orders = relationship("Order", back_populates="variant")
+    order_items = relationship("OrderItem", back_populates="variant")
 
 class Sale(Base):
     __tablename__ = "sales"
@@ -91,6 +91,25 @@ class Customer(Base):
     orders = relationship("Order", back_populates="customer")
     sales = relationship("Sale", back_populates="customer")
 
+class OrderItem(Base):
+    __tablename__ = "order_items"
+    id = Column(Integer, primary_key=True)
+    order_id = Column(Integer, ForeignKey("orders.id", ondelete="CASCADE"))
+    variant_id = Column(Integer, ForeignKey("variants.id"), nullable=False)
+    quantity = Column(Integer, nullable=False)
+    price = Column(Numeric(10, 2), nullable=False)  # Store price at time of order
+    
+    # Relationships
+    order = relationship("Order", back_populates="items")
+    variant = relationship("Variant", back_populates="order_items")
+    
+    @property
+    def product_name(self) -> str:
+        """Get the product name from the variant relationship."""
+        if self.variant and self.variant.product:
+            return self.variant.product.name
+        return "Unknown Product"
+
 class Order(Base):
     __tablename__ = "orders"
     id = Column(Integer, primary_key=True)
@@ -98,11 +117,10 @@ class Order(Base):
     wilaya = Column(Text, nullable=False)
     commune = Column(Text, nullable=False)
     delivery_method = Column(Text, nullable=False)
-    variant_id = Column(Integer, ForeignKey("variants.id"), nullable=False)
-    quantity = Column(Integer, server_default=text("1"))
     order_time = Column(TIMESTAMP, server_default=text("CURRENT_TIMESTAMP"))
     status = Column(Text, server_default=text("'pending'"))
     notes = Column(Text)
+    total = Column(Numeric(10, 2), nullable=False)
     
     # Constraints
     __table_args__ = (
@@ -112,4 +130,4 @@ class Order(Base):
     
     # Relationships
     customer = relationship("Customer", back_populates="orders")
-    variant = relationship("Variant", back_populates="orders")
+    items = relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")

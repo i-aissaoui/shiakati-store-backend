@@ -10,19 +10,29 @@ class APIClient:
     def __init__(self):
         self.base_url = "http://localhost:8000"
         self.token = None
+        # Configure requests session with default timeout and retries
+        self.session = requests.Session()
+        retries = requests.adapters.Retry(
+            total=3,
+            backoff_factor=0.5,
+            status_forcelist=[500, 502, 503, 504]
+        )
+        self.session.mount('http://', requests.adapters.HTTPAdapter(max_retries=retries))
+        self.session.mount('https://', requests.adapters.HTTPAdapter(max_retries=retries))
 
     def login(self, username: str, password: str) -> bool:
         try:
             print(f"Attempting login with username: {username}")
             # Using form-urlencoded format as required by OAuth2PasswordRequestForm
-            response = requests.post(
+            response = self.session.post(
                 f"{self.base_url}/auth/login",
                 headers={"Content-Type": "application/x-www-form-urlencoded"},
                 data={
                     "username": username,
                     "password": password,
                     "grant_type": "password"  # Required for OAuth2 password flow
-                }
+                },
+                timeout=10  # 10 second timeout for login
             )
             print(f"Login response status: {response.status_code}")
             print(f"Login response body: {response.text}")
@@ -32,6 +42,9 @@ class APIClient:
             return False
         except requests.RequestException as e:
             print(f"Login error: {str(e)}")
+            return False
+        except Exception as e:
+            print(f"Unexpected error during login: {str(e)}")
             return False
 
     def get_headers(self) -> Dict[str, str]:
@@ -159,18 +172,43 @@ class APIClient:
     def get_inventory(self) -> List[Dict[str, Any]]:
         """Get all variants with their product information for inventory management."""
         try:
-            # Get all variants first
-            response = requests.get(f"{self.base_url}/variants", headers=self.get_headers())
-            if response.status_code != 200:
-                print(f"Error getting variants: {response.status_code}")
-                return []
+            print("Getting variants from API...")
+            # Get all variants first with timeout
+            try:
+                response = requests.get(
+                    f"{self.base_url}/variants", 
+                    headers=self.get_headers(),
+                    timeout=10  # 10 second timeout for initial request
+                )
+                if response.status_code != 200:
+                    print(f"Error getting variants: {response.status_code}")
+                    if response.status_code == 401:
+                        print("Authentication error - please log in again")
+                    elif response.status_code == 404:
+                        print("Variants endpoint not found - check server URL")
+                    else:
+                        print(f"Server response: {response.text}")
+                    return []
 
-            variants = response.json()
-            if not variants:
+                variants = response.json()
+                if not variants:
+                    print("No variants found in inventory")
+                    return []
+                print(f"Retrieved {len(variants)} variants")
+
+            except requests.Timeout:
+                print("Timeout while getting variants - server taking too long to respond")
+                return []
+            except requests.ConnectionError:
+                print("Connection error - check if the server is running")
+                return []
+            except Exception as e:
+                print(f"Unexpected error getting variants: {str(e)}")
                 return []
 
             # Collect unique product IDs
             product_ids = {variant['product_id'] for variant in variants}
+            print(f"Found {len(product_ids)} unique products to fetch")
             products_map = {}
 
             # Get product details in batches
@@ -215,29 +253,107 @@ class APIClient:
             print(f"Error in get_inventory: {str(e)}")
             return []
 
+    def parse_price_string(self, price_str):
+        """Convert a price string like '19.99 DZD' to a float."""
+        if not price_str or not isinstance(price_str, str):
+            return 0.0
+            
+        # Remove currency symbol and any whitespace
+        clean_price = price_str.replace("DZD", "").strip()
+        try:
+            return float(clean_price)
+        except ValueError:
+            print(f"Warning: Could not parse price '{price_str}'")
+            return 0.0
+
     def get_orders(self) -> List[Dict[str, Any]]:
         """Get all orders with their details."""
         try:
-            response = requests.get(f"{self.base_url}/orders", headers=self.get_headers())
-            if response.status_code == 200:
-                orders = response.json()
-                # Format each order
-                formatted_orders = []
-                for order in orders:
-                    formatted_orders.append({
+            print("Fetching orders...")
+            response = self.session.get(f"{self.base_url}/orders", headers=self.get_headers(), timeout=30)
+            if response.status_code != 200:
+                print(f"Error getting orders: {response.status_code}")
+                return []
+
+            orders = response.json()
+            if not orders:
+                print("No orders found")
+                return []
+            if not orders:
+                print("No orders found")
+                return []
+
+            print(f"Processing {len(orders)} orders...")
+            formatted_orders = []
+
+            for order in orders:
+                try:
+                    # Handle customer information
+                    customer = order.get("customer", {})
+                    if isinstance(customer, dict):
+                        customer_name = customer.get("name") or order.get("customer_name", "N/A")
+                        phone_number = customer.get("phone_number") or order.get("phone_number", "N/A")
+                    else:
+                        customer_name = order.get("customer_name", "N/A")
+                        phone_number = order.get("phone_number", "N/A")
+
+                    # Process items
+                    items = order.get("items", [])
+                    first_item = items[0] if items else {}
+
+                    # Handle items and product information
+                    items = order.get("items", [])
+                    first_item = items[0] if items else {}
+                    
+                    # Get product name from variant or directly
+                    variant = first_item.get("variant", {})
+                    product = variant.get("product", {})
+                    product_name = first_item.get("product_name") or product.get("name", "Unknown Product")
+                    
+                    # Handle price as string or number
+                    price_value = first_item.get("price", 0)
+                    price = self.parse_price_string(price_value) if isinstance(price_value, str) else float(price_value)
+                    
+                    quantity = float(first_item.get("quantity", 0))
+                    
+                    # Calculate total from all items if not provided
+                    total_value = order.get("total", 0)
+                    total = self.parse_price_string(total_value) if isinstance(total_value, str) else float(total_value)
+                    
+                    if total == 0 and items:
+                        total = sum(
+                            float(item.get("price", 0)) * float(item.get("quantity", 0))
+                            for item in items
+                        )
+
+                    formatted_order = {
                         "id": order["id"],
-                        "date": order["order_time"].split("T")[0],  # Get just the date part
-                        "customer": order.get("customer_name", "N/A"),
-                        "total": float(order["total"]) if "total" in order else 0.0,
+                        "order_time": order.get("order_time", ""),
+                        "customer_name": customer_name,
+                        "phone_number": phone_number,
+                        "variant": {
+                            "product_name": product_name,
+                            "price": price
+                        },
+                        "quantity": quantity,
+                        "total": total,
                         "status": order.get("status", "pending"),
                         "delivery_method": order.get("delivery_method", "N/A"),
-                        "phone_number": order.get("phone_number", "N/A"),
                         "wilaya": order.get("wilaya", "N/A"),
-                        "commune": order.get("commune", "N/A")
-                    })
-                return formatted_orders
-            print(f"Error getting orders: {response.status_code}")
-            return []
+                        "commune": order.get("commune", "N/A"),
+                        "notes": order.get("notes", ""),
+                        "items": items  # Keep all items for detailed view
+                    }
+
+                    formatted_orders.append(formatted_order)
+                    
+                except Exception as item_error:
+                    print(f"Error processing order {order.get('id')}: {str(item_error)}")
+                    continue
+
+            print(f"Successfully processed {len(formatted_orders)} orders")
+            return formatted_orders
+
         except Exception as e:
             print(f"Error in get_orders: {str(e)}")
             return []
@@ -379,3 +495,68 @@ class APIClient:
             return response.json()
         except Exception as e:
             raise Exception(f"Failed to update variant: {str(e)}")
+            
+    def get_order(self, order_id: int) -> Optional[Dict[str, Any]]:
+        """Get complete order details by ID."""
+        try:
+            response = self.session.get(
+                f"{self.base_url}/orders/{order_id}", 
+                headers=self.get_headers(),
+                timeout=30
+            )
+            if response.status_code != 200:
+                print(f"Error getting order details: {response.status_code}")
+                return None
+
+            order = response.json()
+            
+            # Ensure consistent customer information format
+            # Customer info could be nested in a customer object or at top level
+            customer = order.get("customer", {})
+            customer_name = customer.get("name") or order.get("customer_name", "N/A")
+            phone_number = customer.get("phone_number") or order.get("phone_number", "N/A")
+
+            formatted_order = {
+                "id": order["id"],
+                "order_time": order.get("order_time", ""),
+                "customer_name": customer_name,
+                "phone_number": phone_number,
+                "total": order.get("total", 0),
+                "status": order.get("status", "pending"),
+                "delivery_method": order.get("delivery_method", "N/A"),
+                "wilaya": order.get("wilaya", "N/A"),
+                "commune": order.get("commune", "N/A"),
+                "notes": order.get("notes", ""),
+                "items": []
+            }
+            
+            # Format items with consistent structure
+            for item in order.get("items", []):
+                formatted_item = {
+                    "id": item.get("id"),
+                    "product_name": item.get("product_name", "Unknown Product"),
+                    "size": item.get("size", "N/A"),  # Default to N/A if None or missing
+                    "color": item.get("color", "N/A"), # Default to N/A if None or missing
+                    "quantity": item.get("quantity", 0),
+                    "price": item.get("price", 0)
+                }
+                formatted_order["items"].append(formatted_item)
+                
+            return formatted_order
+
+        except Exception as e:
+            print(f"Error fetching order {order_id}: {str(e)}")
+            return None
+
+    def update_order_details(self, order_id: int, update_data: Dict[str, Any]) -> bool:
+        """Update order details."""
+        try:
+            response = requests.put(
+                f"{self.base_url}/orders/{order_id}",
+                headers=self.get_headers(),
+                json=update_data
+            )
+            return response.status_code == 200
+        except Exception as e:
+            print(f"Error updating order {order_id}: {str(e)}")
+            return False

@@ -113,6 +113,21 @@ class MainWindow(QMainWindow):
             print(f"Error initializing UI: {str(e)}")
             raise
 
+    def load_initial_data(self):
+        """Load all initial data after successful login."""
+        try:
+            print("Loading initial application data...")
+            self.load_product_list()
+            self.setup_inventory_table()
+            self.load_orders_data()
+            self.update_stats()
+            print("Initial data load completed successfully")
+        except Exception as e:
+            print(f"Error loading initial data: {str(e)}")
+            QMessageBox.warning(self, "Error", f"Failed to load some initial data: {str(e)}")
+            import traceback
+            traceback.print_exc()
+
     def show_login(self):
         self.login_widget = QWidget()
         self.login_widget.setStyleSheet("""
@@ -225,9 +240,7 @@ class MainWindow(QMainWindow):
                 self.switch_page("pos")
                 
                 # Load initial data
-                self.load_product_list()
-                self.setup_inventory_table()
-                self.load_orders_data()
+                self.load_initial_data()
             except Exception as e:
                 print(f"Error setting up main interface: {str(e)}")
                 QMessageBox.warning(self, "Error", f"Failed to initialize interface: {str(e)}")
@@ -746,7 +759,7 @@ class MainWindow(QMainWindow):
                 return
             
             details_dialog = QDialog(self)
-            details_dialog.setWindowTitle(f"Sale Details - #{current_sale_id}")
+            details_dialog.setWindowTitle(f"Sale Details")
             details_dialog.setMinimumWidth(500)
             
             layout = QVBoxLayout(details_dialog)
@@ -1312,26 +1325,44 @@ class MainWindow(QMainWindow):
         
         # Orders table
         self.orders_table = QTableWidget()
-        self.orders_table.setColumnCount(5)
-        self.orders_table.setHorizontalHeaderLabels(["Order ID", "Date", "Customer", "Total", "Status"])
+        self.orders_table.setColumnCount(10)
+        self.orders_table.setHorizontalHeaderLabels([
+            "Order ID", "Date", "Customer", "Phone", "Product", "Quantity",
+            "Total", "Delivery", "Status", "Notes"
+        ])
         self.orders_table.setStyleSheet("""
             QTableWidget {
                 border: 1px solid #dcdde1;
                 border-radius: 4px;
                 background-color: white;
+                gridline-color: #f1f2f6;
             }
             QTableWidget::item {
                 padding: 8px;
+                border-bottom: 1px solid #f1f2f6;
+            }
+            QTableWidget::item:selected {
+                background-color: #3498db;
+                color: white;
             }
             QHeaderView::section {
-                background-color: #f1f2f6;
-                padding: 8px;
+                background-color: #f8fafc;
+                padding: 12px 8px;
                 border: none;
+                border-bottom: 2px solid #e2e8f0;
                 font-weight: bold;
+                color: #475569;
+            }
+            QTableWidget::item:hover {
+                background-color: #f8fafc;
             }
         """)
         self.orders_table.horizontalHeader().setStretchLastSection(True)
         self.orders_table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        self.orders_table.setSelectionMode(QTableWidget.SingleSelection)
+        
+        # Enable double-click to open order details
+        self.orders_table.cellDoubleClicked.connect(self.show_order_details)
         
         layout.addWidget(self.orders_table)
         
@@ -1355,19 +1386,89 @@ class MainWindow(QMainWindow):
     def load_orders_data(self):
         """Load orders data into the orders table."""
         try:
+            print("Loading orders data...")
             orders = self.api_client.get_orders()
-            self.orders_table.setRowCount(0)
+            self.orders_table.setRowCount(0)  # Clear existing rows
             
-            for order in orders:
-                row = self.orders_table.rowCount()
-                self.orders_table.insertRow(row)
-                self.orders_table.setItem(row, 0, QTableWidgetItem(str(order["id"])))
-                self.orders_table.setItem(row, 1, QTableWidgetItem(order["date"]))
-                self.orders_table.setItem(row, 2, QTableWidgetItem(order["customer"] or "N/A"))
-                self.orders_table.setItem(row, 3, QTableWidgetItem(self.format_price(order["total"])))
-                self.orders_table.setItem(row, 4, QTableWidgetItem(order["status"]))
+            if not orders:
+                print("No orders found")
+                return
                 
+            print(f"Displaying {len(orders)} orders")
+            for order in orders:
+                try:
+                    row = self.orders_table.rowCount()
+                    self.orders_table.insertRow(row)
+                    
+                    # Format the order time
+                    order_time = QDateTime.fromString(order.get("order_time"), Qt.ISODateWithMs)
+                    formatted_date = order_time.toString("yyyy-MM-dd hh:mm")
+                    
+                    # Create and style status item
+                    status_item = QTableWidgetItem(order.get("status", "N/A").capitalize())
+                    status = order.get("status", "").lower()
+                    status_color = {
+                        "delivered": "#27ae60",  # Green
+                        "processing": "#3498db", # Blue
+                        "shipped": "#9b59b6",    # Purple
+                        "confirmed": "#2ecc71",  # Light green
+                        "pending": "#f39c12",    # Orange
+                        "cancelled": "#e74c3c"   # Red
+                    }.get(status, "#2c3e50")    # Default dark gray
+                    status_item.setForeground(QColor(status_color))
+                    
+                    # Get customer info from the customer object first
+                    customer = order.get("customer", {})
+                    customer_name = customer.get("name") or order.get("customer_name", "N/A")
+                    phone_number = customer.get("phone_number") or order.get("phone_number", "N/A")
+                    
+                    # Get the first item for display in the main table
+                    first_item = order.get("items", [{}])[0] if order.get("items") else {}
+                    product_name = first_item.get("product_name", "N/A")
+                    
+                    # Set items with proper formatting and proper checking for None values
+                    self.orders_table.setItem(row, 0, QTableWidgetItem(str(order.get("id", "N/A"))))
+                    self.orders_table.setItem(row, 1, QTableWidgetItem(formatted_date))
+                    self.orders_table.setItem(row, 2, QTableWidgetItem(str(customer_name if customer_name else "N/A")))
+                    self.orders_table.setItem(row, 3, QTableWidgetItem(str(phone_number if phone_number else "N/A")))
+                    self.orders_table.setItem(row, 4, QTableWidgetItem(product_name))
+                    self.orders_table.setItem(row, 5, QTableWidgetItem(str(first_item.get("quantity", 0))))
+                    self.orders_table.setItem(row, 6, QTableWidgetItem(self.format_price(float(order.get("total", 0)))))
+                    self.orders_table.setItem(row, 7, QTableWidgetItem(str(order.get("delivery_method", "N/A")).capitalize()))
+                    self.orders_table.setItem(row, 8, status_item)
+                    self.orders_table.setItem(row, 9, QTableWidgetItem(order.get("notes", "")))
+                    
+                except Exception as item_error:
+                    print(f"Error adding order row {row}: {str(item_error)}")
+                    continue
+            
+            # Adjust column widths
+            header = self.orders_table.horizontalHeader()
+            # Fixed width columns
+            header.setSectionResizeMode(0, QHeaderView.Fixed)  # ID
+            header.setSectionResizeMode(1, QHeaderView.Fixed)  # Date
+            header.setSectionResizeMode(3, QHeaderView.Fixed)  # Phone
+            header.setSectionResizeMode(5, QHeaderView.Fixed)  # Quantity
+            header.setSectionResizeMode(6, QHeaderView.Fixed)  # Total 
+            header.setSectionResizeMode(7, QHeaderView.Fixed)  # Delivery
+            header.setSectionResizeMode(8, QHeaderView.Fixed)  # Status
+            
+            # Stretching columns
+            header.setSectionResizeMode(2, QHeaderView.Stretch)  # Customer name
+            header.setSectionResizeMode(4, QHeaderView.Stretch)  # Product
+            header.setSectionResizeMode(9, QHeaderView.Stretch)  # Notes
+            
+            # Set specific widths
+            self.orders_table.setColumnWidth(0, 80)   # ID
+            self.orders_table.setColumnWidth(1, 150)  # Date
+            self.orders_table.setColumnWidth(3, 120)  # Phone
+            self.orders_table.setColumnWidth(5, 80)   # Quantity
+            self.orders_table.setColumnWidth(6, 120)  # Total
+            self.orders_table.setColumnWidth(7, 100)  # Delivery
+            self.orders_table.setColumnWidth(8, 100)  # Status
+            
         except Exception as e:
+            print(f"Error in load_orders_data: {str(e)}")
             QMessageBox.warning(self, "Error", f"Failed to load orders: {str(e)}")
 
     def filter_product_list(self):
@@ -2064,8 +2165,6 @@ class MainWindow(QMainWindow):
             barcode = self.sale_table.item(row, 1).text().strip()
             price = self.parse_price(self.sale_table.item(row, 2).text())
 
-           
-
             # Check available stock
             available_stock = 0
             for product_row in range(self.product_list.rowCount()):
@@ -2204,3 +2303,167 @@ class MainWindow(QMainWindow):
                 
         except Exception as e:
             QMessageBox.warning(self, "Error", f"Failed to delete product: {str(e)}")
+
+    def show_order_details(self, row: int, column: int):
+        """Show detailed information for a selected order in a dialog."""
+        try:
+            order_id_item = self.orders_table.item(row, 0)
+            if not order_id_item:
+                QMessageBox.warning(self, "Error", "Could not get order ID.")
+                return
+            
+            order_id = int(order_id_item.text())
+            order_data = self.api_client.get_order(order_id)
+
+            if not order_data:
+                QMessageBox.warning(self, "Error", f"Could not fetch details for order ID {order_id}")
+                return
+
+            dialog = QDialog(self)
+            dialog.setWindowTitle(f"Order Details - ID: {order_id}")
+            dialog.setMinimumWidth(700) # Increased width for more columns
+            dialog.setStyleSheet("""
+                QDialog {
+                    background-color: #f8f9fa;
+                }
+                QLabel {
+                    font-size: 14px;
+                    margin-bottom: 2px;
+                }
+                QLineEdit, QTextEdit, QComboBox {
+                    padding: 8px;
+                    border: 1px solid #ced4da;
+                    border-radius: 4px;
+                    background-color: white;
+                    font-size: 14px;
+                }
+                QTableWidget {
+                    font-size: 13px;
+                }
+                QPushButton {
+                    min-height: 30px;
+                }
+            """)
+            
+            main_layout = QVBoxLayout(dialog)
+            main_layout.setSpacing(15)
+
+            # Customer Information Section
+            customer_group = QGroupBox("Customer Information")
+            customer_layout = QFormLayout(customer_group)
+            customer_layout.addRow("Name:", QLabel(str(order_data.get('customer_name', 'N/A'))))
+            customer_layout.addRow("Phone:", QLabel(str(order_data.get('phone_number', 'N/A'))))
+            main_layout.addWidget(customer_group)
+
+            # Order Items Section
+            items_group = QGroupBox("Order Items")
+            items_layout = QVBoxLayout(items_group)
+            
+            items_details_table = QTableWidget()
+            items_details_table.setColumnCount(6)  # Increased column count
+            items_details_table.setHorizontalHeaderLabels([
+                "Product", "Size", "Color", "Quantity", "Price", "Total"
+            ])
+            items_details_table.setEditTriggers(QTableWidget.NoEditTriggers)
+            items_details_table.setSelectionBehavior(QTableWidget.SelectRows)
+            items_details_table.verticalHeader().setVisible(False)
+            items_details_table.horizontalHeader().setStretchLastSection(False)
+            items_details_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch) # Product Name
+            items_details_table.setColumnWidth(1, 80)  # Size
+            items_details_table.setColumnWidth(2, 80)  # Color
+            items_details_table.setColumnWidth(3, 70)  # Quantity
+            items_details_table.setColumnWidth(4, 100) # Price
+            items_details_table.setColumnWidth(5, 100) # Total
+
+            for item in order_data.get("items", []):
+                item_row = items_details_table.rowCount()
+                items_details_table.insertRow(item_row)
+                items_details_table.setItem(item_row, 0, QTableWidgetItem(str(item.get('product_name', 'N/A'))))
+                items_details_table.setItem(item_row, 1, QTableWidgetItem(str(item.get('size', 'N/A'))))
+                items_details_table.setItem(item_row, 2, QTableWidgetItem(str(item.get('color', 'N/A'))))
+                items_details_table.setItem(item_row, 3, QTableWidgetItem(str(item.get('quantity', 0))))
+                
+                price = float(item.get('price', 0))
+                quantity = int(item.get('quantity', 0))
+                total_item_price = price * quantity
+                
+                items_details_table.setItem(item_row, 4, QTableWidgetItem(self.format_price(price)))
+                items_details_table.setItem(item_row, 5, QTableWidgetItem(self.format_price(total_item_price)))
+            
+            items_layout.addWidget(items_details_table)
+            main_layout.addWidget(items_group)
+
+            # Order Summary Section
+            summary_group = QGroupBox("Order Summary")
+            summary_layout = QFormLayout(summary_group)
+            summary_layout.addRow("Order Date:", QLabel(QDateTime.fromString(order_data.get('order_time'), Qt.ISODateWithMs).toString('yyyy-MM-dd hh:mm')))
+            summary_layout.addRow("Total Amount:", QLabel(self.format_price(float(order_data.get('total', 0)))))
+            summary_layout.addRow("Delivery Method:", QLabel(str(order_data.get('delivery_method', 'N/A')).capitalize()))
+            main_layout.addWidget(summary_group)
+
+            # Status and Notes Section
+            status_notes_group = QGroupBox("Update Order")
+            status_notes_layout = QFormLayout(status_notes_group)
+
+            status_label = QLabel("Status:")
+            self.status_combo = QComboBox()
+            statuses = ["Pending", "Confirmed", "Processing", "Shipped", "Delivered", "Cancelled"]
+            self.status_combo.addItems(statuses)
+            current_status = str(order_data.get('status', 'Pending')).capitalize()
+            if current_status in statuses:
+                self.status_combo.setCurrentText(current_status)
+            status_notes_layout.addRow(status_label, self.status_combo)
+
+            notes_label = QLabel("Notes:")
+            self.notes_edit = QTextEdit()
+            self.notes_edit.setPlainText(str(order_data.get('notes', '')))
+            self.notes_edit.setFixedHeight(80)
+            status_notes_layout.addRow(notes_label, self.notes_edit)
+            main_layout.addWidget(status_notes_group)
+
+            # Dialog Buttons
+            button_box = QDialogButtonBox()
+            save_button = button_box.addButton("Save Changes", QDialogButtonBox.AcceptRole)
+            cancel_button = button_box.addButton(QDialogButtonBox.Cancel)
+            main_layout.addWidget(button_box)
+
+            save_button.clicked.connect(lambda: self.update_order_details_from_dialog(dialog, order_id))
+            cancel_button.clicked.connect(dialog.reject)
+            
+            dialog.exec_()
+
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to show order details: {str(e)}")
+            print(f"Error in show_order_details: {str(e)}")
+            import traceback
+            traceback.print_exc()
+
+    def update_order_details_from_dialog(self, dialog: QDialog, order_id: int):
+        """Update order details from the dialog inputs."""
+        try:
+            # Get new values
+            new_status = dialog.findChild(QComboBox).currentText()
+            new_notes = dialog.findChild(QTextEdit).toPlainText()
+            
+            # Validate status
+            valid_statuses = ["Pending", "Confirmed", "Processing", "Shipped", "Delivered", "Cancelled"]
+            if new_status not in valid_statuses:
+                QMessageBox.warning(dialog, "Error", "Invalid status value")
+                return
+            
+            # Update order via API
+            response = self.api_client.update_order(order_id, new_status, new_notes)
+            
+            if response and response.get("success"):
+                QMessageBox.information(dialog, "Success", "Order updated successfully")
+                dialog.accept()
+                
+                # Refresh orders data
+                self.load_orders_data()
+            else:
+                error_msg = response.get("error", "Unknown error") if response else "No response from server"
+                QMessageBox.warning(dialog, "Error", f"Failed to update order: {error_msg}")
+                
+        except Exception as e:
+            QMessageBox.critical(dialog, "Error", f"Failed to update order details: {str(e)}")
+            print(f"Error updating order details: {str(e)}")
