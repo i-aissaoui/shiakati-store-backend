@@ -4,7 +4,7 @@ from datetime import datetime
 from decimal import Decimal
 
 class SaleItemBase(BaseModel):
-    variant_id: int
+    variant_id: Optional[int] = None  # Make variant_id optional to handle NULL values
     quantity: Decimal = Field(gt=0)  # Allow any positive number
     price: Decimal = Field(gt=0)  # Allow any positive number
 
@@ -25,7 +25,9 @@ class SaleCreate(SaleBase):
 
 class SaleItemOut(SaleItemBase):
     id: int
-    product_name: str  # This will be populated from the variant.product relationship
+    product_name: str = "Unknown Product"  # Default value if product is missing
+    size: Optional[str] = None
+    color: Optional[str] = None
     
     class Config:
         from_attributes = True

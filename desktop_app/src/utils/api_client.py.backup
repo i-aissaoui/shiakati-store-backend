@@ -1,0 +1,974 @@
+import requests
+from typing import Dict, Any, Optional, List
+import os
+from dotenv import load_dotenv
+import time
+
+load_dotenv()
+
+class APIClient:
+    def __init__(self):
+        self.base_url = "http://localhost:8000"
+        self.token = None
+        # Configure requests session with default timeout and retries
+        self.session = requests.Session()
+        retries = requests.adapters.Retry(
+            total=3,
+            backoff_factor=0.5,
+            status_forcelist=[500, 502, 503, 504]
+        )
+        self.session.mount('http://', requests.adapters.HTTPAdapter(max_retries=retries))
+        self.session.mount('https://', requests.adapters.HTTPAdapter(max_retries=retries))
+        
+        # Add caching for better performance
+        self._cache = {}
+        self._cache_timeout = {}
+        self._default_cache_timeout = 60  # Default cache timeout in seconds
+
+    def login(self, username: str, password: str) -> bool:
+        try:            # Using form-urlencoded format as required by OAuth2PasswordRequestForm
+            response = self.session.post(
+                f"{self.base_url}/auth/login",
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
+                data={
+                    "username": username,
+                    "password": password,
+                    "grant_type": "password"  # Required for OAuth2 password flow
+                },
+                timeout=10  # 10 second timeout for login
+            )
+            
+            if response.status_code == 200:
+                self.token = response.json()["access_token"]
+                return True
+            return False
+        except requests.RequestException as e:
+            pass  # Login error handled
+            return False
+        except Exception as e:
+            pass  # Login error handled
+            return False
+
+    def get_headers(self) -> Dict[str, str]:
+        return {"Authorization": f"Bearer {self.token}"} if self.token else {}
+
+    def get_products(self) -> list:
+        def fetch_products():
+            try:
+                # First get the list of products - use session for connection pooling
+                response = self.session.get(f"{self.base_url}/products", headers=self.get_headers(), timeout=10)
+                if response.status_code != 200:                    return []
+                
+                products = response.json()
+                
+                # Then get detailed info for each product including variants
+                detailed_products = []
+                max_retries = 3
+                
+                for product in products:
+                    retries = 0
+                    success = False
+                    
+                    while retries < max_retries and not success:
+                        try:
+                            detail_response = self.session.get(
+                                f"{self.base_url}/products/{product['id']}", 
+                                headers=self.get_headers(),
+                                timeout=10  # Add timeout
+                            )
+                            
+                            if detail_response.status_code == 200:
+                                detailed_products.append(detail_response.json())
+                                success = True
+                            elif detail_response.status_code == 404:                                break  # Don't retry 404s
+                            else:                                retries += 1
+                        except Exception as e:
+                            pass  # Request error handling
+                            retries += 1
+                            
+                        if retries > 0 and not success:
+                            time.sleep(0.5)  # Add delay between retries
+                
+                return detailed_products
+            except Exception as e:
+                return []
+                
+        try:
+            # Use caching for products - cache for 2 minutes (120 seconds)
+            return self._get_from_cache_or_fetch("products", fetch_products, 120)
+        except Exception as e:
+            return []
+
+    def get_product_by_barcode(self, barcode: str) -> Optional[Dict[str, Any]]:
+        response = self.session.get(f"{self.base_url}/products/barcode/{barcode}", headers=self.get_headers(), timeout=10)
+        return response.json() if response.status_code == 200 else None
+
+    def create_sale(self, items: list, total: float) -> Optional[Dict[str, Any]]:
+        try:
+            # Create sale items in the format expected by the API
+            sale_items = []
+            for item in items:
+                # Get variant_id from barcode
+                variant_response = self.session.get(
+                    f"{self.base_url}/variants/barcode/{item['barcode']}", 
+                    headers=self.get_headers(),
+                    timeout=10
+                )
+                if variant_response.status_code != 200:
+                    raise Exception(f"Variant not found for barcode: {item['barcode']}")
+                    
+                variant = variant_response.json()
+                sale_items.append({
+                    "variant_id": variant["id"],
+                    "quantity": item["quantity"],
+                    "price": item["price"]
+                })
+
+            # Create the sale
+            data = {
+                "items": sale_items,
+                "total": total
+            }
+            response = self.session.post(
+                f"{self.base_url}/sales", 
+                json=data, 
+                headers=self.get_headers(),
+                timeout=15
+            )
+            
+            if response.status_code == 200:
+                # Clear sales cache after creating a new sale
+                self.clear_cache("sales_")
+                return response.json()
+            else:
+                error_msg = response.json().get('detail', 'Unknown error') if response.status_code != 500 else 'Server error'
+                raise Exception(f"Failed to create sale: {error_msg}")
+                
+        except requests.RequestException as e:
+            return None
+        except Exception as e:
+            return None
+
+    def get_categories(self) -> List[Dict[str, Any]]:
+        """Get list of categories."""
+        try:
+            response = self.session.get(f"{self.base_url}/categories", headers=self.get_headers(), timeout=10)
+            if response.status_code == 200:
+                categories = response.json()
+                
+                # Convert to dictionaries if needed
+                if categories and not isinstance(categories[0], dict):
+                    # Handle tuple or other non-dict formats
+                    result = []
+                    for cat in categories:
+                        # Try to convert to dict
+                        if hasattr(cat, '_asdict'):  # Named tuple
+                            result.append(cat._asdict())
+                        elif isinstance(cat, tuple):  # Regular tuple
+                            # Guess the fields based on Category model structure
+                            result.append({
+                                "id": cat[0] if len(cat) > 0 else None,
+                                "name": cat[1] if len(cat) > 1 else None,
+                                "products_count": cat[2] if len(cat) > 2 else 0
+                            })
+                        else:
+                            # Just try to use the object as is and hope for the best
+                            result.append(cat)
+                    return result
+                return categories
+        except Exception as e:
+            return []
+
+    def create_product(self, product_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        response = requests.post(f"{self.base_url}/products", json=product_data, headers=self.get_headers())
+        if response.status_code == 200:
+            return response.json()
+        else:
+            error_msg = response.json().get('detail', 'Unknown error') if response.status_code != 500 else 'Server error'
+            raise Exception(f"Failed to create product: {error_msg}")
+
+    def update_product(self, product_id: int, product_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        response = requests.put(f"{self.base_url}/products/{product_id}", json=product_data, headers=self.get_headers())
+        return response.json() if response.status_code == 200 else None
+
+    def delete_product(self, product_id: int) -> bool:
+        response = requests.delete(f"{self.base_url}/products/{product_id}", headers=self.get_headers())
+        return response.status_code == 200
+
+    def get_sales_stats(self) -> Dict[str, Any]:
+        response = requests.get(f"{self.base_url}/stats", headers=self.get_headers())
+        return response.json() if response.status_code == 200 else {}
+    
+    def get_sales_history(self) -> List[Dict[str, Any]]:
+        """Get list of all sales with their details for history view."""
+        try:
+            response = self.session.get(
+                f"{self.base_url}/sales", 
+                headers=self.get_headers(),
+                timeout=30
+            )
+            if response.status_code == 200:
+                sales = response.json()
+                return sales
+        except requests.RequestException as e:
+            return []
+        except Exception as e:
+            return []
+            
+    def get_sales_by_date_range(self, start_date: str, end_date: str) -> List[Dict[str, Any]]:
+        """Get sales filtered by date range.
+        
+        Args:
+            start_date: Start date in format 'YYYY-MM-DD'
+            end_date: End date in format 'YYYY-MM-DD'
+        """
+        try:
+            response = requests.get(
+                f"{self.base_url}/sales",
+                params={"start_date": start_date, "end_date": end_date},
+                headers=self.get_headers()
+            )
+            if response.status_code == 200:
+                # Filter the results on the client side if the server doesn't support filtering
+                sales = response.json()
+                if not start_date and not end_date:
+                    return sales
+                
+                filtered_sales = []
+                for sale in sales:
+                    sale_time = sale.get("sale_time", "")
+                    if not sale_time:
+                        continue
+                    
+                    # Only take the date part for comparison
+                    sale_date = sale_time.split("T")[0] if "T" in sale_time else sale_time.split(" ")[0]
+                    
+                    if (not start_date or sale_date >= start_date) and (not end_date or sale_date <= end_date):
+                        filtered_sales.append(sale)
+                
+                return filtered_sales
+        except Exception as e:
+            return []
+
+    def get_sale_details(self, sale_id: int) -> Optional[Dict[str, Any]]:
+        """Get details of a specific sale by ID.
+        
+        Args:
+            sale_id: The ID of the sale to retrieve
+            
+        Returns:
+            Dictionary with sale details or None if not found
+        """
+        try:
+            cache_key = f"sale_{sale_id}"
+            # Check cache first
+            cached_result = self._get_from_cache(cache_key)
+            if cached_result is not None:
+                return cached_result
+            
+            response = self.session.get(
+                f"{self.base_url}/sales/{sale_id}",
+                headers=self.get_headers(),
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                sale = response.json()
+                # Cache the result for 2 minutes
+                self._add_to_cache(cache_key, sale, 120)
+                return sale
+        except Exception as e:
+            return None
+
+    def parse_price_string(self, price_str):
+        """Convert a price string like '19.99 DZD' to a float."""
+        if not price_str or not isinstance(price_str, str):
+            return 0.0
+            
+        # Remove currency symbol and any whitespace
+        clean_price = price_str.replace("DZD", "").strip()
+        try:
+            return float(clean_price)
+        except ValueError:            return 0.0
+
+    def get_orders(self) -> List[Dict[str, Any]]:
+        """Get all orders with their details."""
+        try:            response = self.session.get(f"{self.base_url}/orders", headers=self.get_headers(), timeout=30)
+            if response.status_code != 200:                return []
+
+            orders = response.json()
+            if not orders:                return []
+
+            formatted_orders = []
+
+            for order in orders:
+                try:
+                    # Debug: Check raw items data from API
+                    raw_items = order.get("items", [])
+                    if raw_items:
+                        first_item = raw_items[0]                        # Process items
+                    items = order.get("items", [])
+                    first_item = items[0] if items else {}
+                    
+                    # Get product name from first item
+                    product_name = first_item.get("product_name", "Unknown Product")
+                    
+                    # Handle price as string or number
+                    price_value = first_item.get("price", 0)
+                    price = self.parse_price_string(price_value) if isinstance(price_value, str) else float(price_value)
+                    
+                    quantity = float(first_item.get("quantity", 0))
+                    
+                    formatted_order = {
+                        "id": order["id"],
+                        "order_time": order.get("order_time", ""),
+                        "customer_name": order.get("customer_name"),
+                        "phone_number": order.get("phone_number"),
+                        "product_name": product_name,
+                        "quantity": quantity,
+                        "total": float(order.get("total", 0)),
+                        "status": order.get("status", "pending"),
+                        "delivery_method": order.get("delivery_method", "N/A"),
+                        "wilaya": order.get("wilaya", "N/A"),
+                        "commune": order.get("commune", "N/A"),
+                        "notes": order.get("notes", ""),
+                        "items": items  # This preserves the full item data including size/color
+                    }
+
+                    if formatted_order['items']:                    formatted_orders.append(formatted_order)
+                    
+                except Exception as item_error:
+                    continue
+
+            return formatted_orders
+
+        except Exception as e:
+                print(f"Error getting stats: {response.status_code}")
+                if response.status_code != 500:
+                    print(f"Error response: {response.text}")
+                return {}
+            return []
+
+    def get_stats(self) -> Dict[str, Any]:
+        """Get overall statistics summary."""
+        try:            response = self.session.get(f"{self.base_url}/stats/", headers=self.get_headers(), timeout=15)
+            
+            if response.status_code != 200:                if response.status_code != 500:                return {}
+                
+            data = response.json()            if not isinstance(data, dict):
+                return {}
+            
+            # Ensure all required fields exist
+            data.setdefault('total_sales', 0)
+            data.setdefault('total_orders', 0)
+            data.setdefault('total_revenue', 0)
+            data.setdefault('top_products', [])
+            
+            return data
+            
+        except Exception as e:
+            return {}
+
+    # Original get_categories method is already defined above
+
+    def create_category(self, category_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Create a new category."""
+        try:
+            response = requests.post(
+                f"{self.base_url}/categories",
+                json=category_data,
+                headers=self.get_headers()
+            )
+            if response.status_code == 200 or response.status_code == 201:
+                return response.json()            return None
+        except Exception as e:
+            return None
+    
+    def update_category(self, category_id: str, category_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Update an existing category."""
+        try:
+            response = requests.put(
+                f"{self.base_url}/categories/{category_id}",
+                json=category_data,
+                headers=self.get_headers()
+            )
+            if response.status_code == 200:
+                return response.json()            return None
+        except Exception as e:
+            return None
+    
+    def delete_category(self, category_id: str) -> bool:
+        """Delete a category."""
+        try:
+            response = requests.delete(
+                f"{self.base_url}/categories/{category_id}",
+                headers=self.get_headers()
+            )
+            if response.status_code == 200 or response.status_code == 204:
+                return True            return False
+        except Exception as e:
+            return False
+
+    def get_expenses(self) -> List[Dict[str, Any]]:
+        """Get all expenses with optional pagination, improved error handling and authentication."""
+        def fetch_expenses():
+            max_retries = 3
+            attempt = 0
+            
+            while attempt < max_retries:
+                if not self._ensure_authenticated():                    return []
+                    
+                try:                    response = self.session.get(
+                        f"{self.base_url}/expenses", 
+                        headers=self.get_headers(),
+                        timeout=30
+                    )
+                    
+                    if response.status_code == 200:
+                        expenses = response.json()
+                        return expenses
+                    elif response.status_code == 401:
+                        if self._handle_auth_error(response):                            attempt += 1
+                            continue
+                        else:                            return []
+                    else:                        # Check for common error codes
+                        if response.status_code == 404:                        elif response.status_code == 500:                            # Show part of the error message
+                        
+                        # Implement exponential backoff for server errors
+                        if response.status_code >= 500:
+                            sleep_time = min(2 ** attempt, 30)  # Max 30 seconds                            time.sleep(sleep_time)
+                            attempt += 1
+                            continue
+                        return []
+                except Exception as e:
+                    sleep_time = min(2 ** attempt, 30)  # Max 30 seconds                    time.sleep(sleep_time)
+                    attempt += 1
+                    
+                if attempt >= max_retries:                    return []
+            
+            return []  # Fallback empty list if we somehow exit the loop
+                
+        # Make sure we're authenticated before trying to fetch or use cache
+        if not self._ensure_authenticated():            return []
+            
+        cache_key = "expenses_all"
+        return self._get_from_cache_or_fetch(cache_key, fetch_expenses, 120)
+    
+    def get_expenses_by_date_range(self, start_date: str, end_date: str) -> List[Dict[str, Any]]:
+        """Get expenses between two dates (format: yyyy-MM-dd) with improved error handling and authentication."""
+        def fetch_expenses_by_date_range():
+            max_retries = 3
+            attempt = 0
+            
+            while attempt < max_retries:
+                if not self._ensure_authenticated():                    return []
+                    
+                try:                    response = self.session.get(
+                        f"{self.base_url}/expenses/date-range?start_date={start_date}&end_date={end_date}", 
+                        headers=self.get_headers(),
+                        timeout=30
+                    )
+                    
+                    if response.status_code == 200:
+                        expenses = response.json()
+                        return expenses
+                    elif response.status_code == 401:
+                        if self._handle_auth_error(response):                            attempt += 1
+                            continue
+                        else:                            return []
+                    else:                        # Provide more detailed error information
+                        if response.status_code == 404:                        elif response.status_code == 422:                        elif response.status_code == 500:                        # Implement exponential backoff for server errors
+                        if response.status_code >= 500:
+                            sleep_time = min(2 ** attempt, 30)  # Max 30 seconds                            time.sleep(sleep_time)
+                            attempt += 1
+                            continue
+                        return []
+                except Exception as e:
+                    sleep_time = min(2 ** attempt, 30)  # Max 30 seconds                    time.sleep(sleep_time)
+                    attempt += 1
+                    
+                if attempt >= max_retries:                    return []
+            
+            return []  # Fallback empty list if we somehow exit the loop
+                
+        # Make sure we're authenticated before trying to fetch or use cache
+        if not self._ensure_authenticated():            return []
+            
+        # Use cache with a key that includes date range parameters
+        cache_key = f"expenses_range_{start_date}_to_{end_date}"
+        return self._get_from_cache_or_fetch(cache_key, fetch_expenses_by_date_range, 120)
+    
+    def get_monthly_expenses(self, year: int, month: int) -> List[Dict[str, Any]]:
+        """Get expenses for a specific month and year with improved error handling and authentication."""
+        def fetch_monthly_expenses():
+            max_retries = 3
+            attempt = 0
+            
+            while attempt < max_retries:
+                if not self._ensure_authenticated():                    return []
+                    
+                try:                    response = self.session.get(
+                        f"{self.base_url}/expenses/monthly/{year}/{month}", 
+                        headers=self.get_headers(),
+                        timeout=30
+                    )
+                    
+                    if response.status_code == 200:
+                        expenses = response.json()
+                        return expenses
+                    elif response.status_code == 401:
+                        if self._handle_auth_error(response):                            attempt += 1
+                            continue
+                        else:                            return []
+                    else:                        # Implement exponential backoff for server errors
+                        if response.status_code >= 500:
+                            sleep_time = min(2 ** attempt, 30)  # Max 30 seconds                            time.sleep(sleep_time)
+                            attempt += 1
+                            continue
+                        return []
+                except Exception as e:
+                    sleep_time = min(2 ** attempt, 30)  # Max 30 seconds                    time.sleep(sleep_time)
+                    attempt += 1
+                    
+                if attempt >= max_retries:                    return []
+            
+            return []  # Fallback empty list if we somehow exit the loop
+                
+        # Make sure we're authenticated before trying to fetch or use cache
+        if not self._ensure_authenticated():            return []
+            
+        # Use cache with a key that includes year and month parameters
+        cache_key = f"expenses_monthly_{year}_{month}"
+        return self._get_from_cache_or_fetch(cache_key, fetch_monthly_expenses, 120)
+    
+    def get_expense_summary(self, year: int, month: int) -> Dict[str, Any]:
+        """Get expense summary for a specific month and year."""
+        def fetch_expense_summary():
+            try:
+                response = self.session.get(
+                    f"{self.base_url}/expenses/summary/{year}/{month}", 
+                    headers=self.get_headers(),
+                    timeout=30
+                )
+                if response.status_code == 200:
+                    return response.json()
+                else:                    return {"total": 0, "categories": {}}
+            except Exception as e:
+                return {"total": 0, "categories": {}}
+                
+        # Use cache with a key that includes year and month parameters
+        cache_key = f"expense_summary_{year}_{month}"
+        return self._get_from_cache_or_fetch(cache_key, fetch_expense_summary, 120)
+    
+    def create_expense(self, expense_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Create a new expense."""
+        try:
+            if not self._ensure_authenticated():
+                return {
+                    "success": False,
+                    "error": "Not authenticated"
+                }
+            
+            # Format expense data correctly
+            if "date" in expense_data:
+                # Convert 'date' to 'expense_date' to match API schema
+                date_value = expense_data.pop("date")
+                expense_data["expense_date"] = date_value
+            
+            # Ensure date is in correct format
+            if "expense_date" in expense_data and isinstance(expense_data["expense_date"], str):
+                # Make sure we're using YYYY-MM-DD format
+                try:
+                    # Parse date string to ensure it's valid
+                    from datetime import datetime
+                    date_obj = datetime.strptime(expense_data["expense_date"], "%Y-%m-%d")
+                    # Format it back to ensure consistency
+                    expense_data["expense_date"] = date_obj.strftime("%Y-%m-%d")
+                except ValueError:
+                    pass  # Keep original value if parsing fails
+                
+            response = self.session.post(
+                f"{self.base_url}/expenses/", 
+                headers=self.get_headers(),
+                json=expense_data,
+                timeout=30
+            )
+            
+            if response.status_code == 200 or response.status_code == 201:
+                # Clear relevant caches when creating a new expense
+                self.clear_cache("expenses_")
+                
+                return {
+                    "success": True,
+                    "expense": response.json()
+                }
+            else:                # Check for validation errors
+                if response.status_code == 422:
+                    try:
+                        error_detail = response.json()                    except:
+                        pass
+                
+                # Check for common error codes
+                if response.status_code == 500:                elif response.status_code == 422:                elif response.status_code == 401:                # Try to parse error message
+                try:
+                    error_detail = response.json().get('detail', 'Unknown error')
+                except:
+                    error_detail = f"HTTP {response.status_code}: {response.text[:100]}"
+                    
+                return {
+                    "success": False,
+                    "error": f"Failed to create expense: {error_detail}"
+                }
+        except requests.exceptions.ConnectionError:            return {
+                "success": False,
+                "error": "Connection error: Could not connect to the server"
+            }
+        except requests.exceptions.Timeout:            return {
+                "success": False, 
+                "error": "Request timed out: The server took too long to respond"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e)
+            }
+    
+    def update_expense(self, expense_id: int, expense_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Update an existing expense."""
+        try:
+            if not self._ensure_authenticated():
+                return {
+                    "success": False,
+                    "error": "Not authenticated"
+                }            response = self.session.put(
+                f"{self.base_url}/expenses/{expense_id}", 
+                headers=self.get_headers(),
+                json=expense_data,
+                timeout=30
+            )
+            
+            if response.status_code == 200:
+                # Clear all expense-related cache entries
+                self.clear_cache("expenses_")
+                return {
+                    "success": True,
+                    "expense": response.json()
+                }
+            else:                # Check for common error codes
+                if response.status_code == 404:                elif response.status_code == 500:                elif response.status_code == 422:                # Try to parse error message
+                try:
+                    error_detail = response.json().get('detail', 'Unknown error')
+                except:
+                    error_detail = f"HTTP {response.status_code}: {response.text[:100]}"
+                    
+                return {
+                    "success": False,
+                    "error": f"Failed to update expense: {error_detail}"
+                }
+        except requests.exceptions.ConnectionError:            return {
+                "success": False,
+                "error": "Connection error: Could not connect to the server"
+            }
+        except requests.exceptions.Timeout:            return {
+                "success": False, 
+                "error": "Request timed out: The server took too long to respond"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e)
+            }
+    
+    def delete_expense(self, expense_id: int) -> Dict[str, Any]:
+        """Delete an expense."""
+        try:
+            if not self._ensure_authenticated():
+                return {
+                    "success": False,
+                    "error": "Not authenticated"
+                }            response = self.session.delete(
+                f"{self.base_url}/expenses/{expense_id}", 
+                headers=self.get_headers(),
+                timeout=30
+            )
+            
+            if response.status_code == 200:
+                # Clear all expense-related cache entries
+                self.clear_cache("expenses_")
+                return {
+                    "success": True,
+                    "message": "Expense deleted successfully"
+                }
+            else:                # Check for common error codes
+                if response.status_code == 404:                elif response.status_code == 500:                # Try to parse error message
+                try:
+                    error_detail = response.json().get('detail', 'Unknown error')
+                except:
+                    error_detail = f"HTTP {response.status_code}: {response.text[:100]}"
+                    
+                return {
+                    "success": False,
+                    "error": f"Failed to delete expense: {error_detail}"
+                }
+        except requests.exceptions.ConnectionError:            return {
+                "success": False,
+                "error": "Connection error: Could not connect to the server"
+            }
+        except requests.exceptions.Timeout:            return {
+                "success": False, 
+                "error": "Request timed out: The server took too long to respond"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e)
+            }
+    
+    def get_orders_by_date_range(self, start_date: str, end_date: str) -> List[Dict[str, Any]]:
+        """Get orders between two dates (format: yyyy-MM-dd).
+        
+        This method attempts to fetch orders from the server API first, but will fall back
+        to client-side filtering if the API request fails or returns no results.
+        
+        Args:
+            start_date: Start date in format 'YYYY-MM-DD'
+            end_date: End date in format 'YYYY-MM-DD'
+        """
+        # Validate dates
+        if not start_date or not end_date:        try:
+            # First attempt: Use the API endpoint directly            response = self.session.get(
+                f"{self.base_url}/orders/date-range?start_date={start_date}&end_date={end_date}", 
+                headers=self.get_headers(),
+                timeout=30
+            )
+            
+            if response.status_code == 200:
+                orders = response.json()
+                # If API returned results, format and return them
+                if orders:
+                    # Format orders to ensure consistent structure
+                    formatted_orders = []
+                    for order in orders:
+                        # Ensure consistent customer information format
+                        customer = order.get("customer", {})
+                        customer_name = customer.get("name") if customer else order.get("customer_name", "N/A")
+                        phone_number = customer.get("phone_number") if customer else order.get("phone_number", "N/A")
+                        
+                        formatted_order = {
+                            "id": order["id"],
+                            "order_time": order.get("order_time", ""),
+                            "customer_name": customer_name,
+                            "phone_number": phone_number,
+                            "total": order.get("total", 0),
+                            "status": order.get("status", "pending"),
+                            "delivery_method": order.get("delivery_method", "N/A"),
+                            "wilaya": order.get("wilaya", "N/A"),
+                            "commune": order.get("commune", "N/A"),
+                            "notes": order.get("notes", ""),
+                            "items": []
+                        }
+                        
+                        # Format items
+                        for item in order.get("items", []):
+                            variant = item.get("variant", {})
+                            product = variant.get("product", {})
+                            
+                            formatted_item = {
+                                "id": item.get("id"),
+                                "product_name": product.get("name", "Unknown Product"),
+                                "size": variant.get("size", "N/A"),
+                                "color": variant.get("color", "N/A"),
+                                "quantity": item.get("quantity", 0),
+                                "price": item.get("price", 0)
+                            }
+                            formatted_order["items"].append(formatted_item)
+                        
+                        formatted_orders.append(formatted_order)
+                        
+                    return formatted_orders
+            
+            # If no orders returned from API or error occurred, try client-side filtering as fallback        except Exception as e:
+            import traceback
+            traceback.print_exc()
+        
+        # FALLBACK: Client-side filtering of all orders
+        try:            all_orders = self.get_orders()
+            if not all_orders:                return []
+                
+            # Parse date strings from the input params
+            from datetime import datetime, date
+            
+            try:
+                start_date_obj = datetime.strptime(start_date, "%Y-%m-%d").date() if start_date else None
+                end_date_obj = datetime.strptime(end_date, "%Y-%m-%d").date() if end_date else None            except ValueError as e:                return []
+            
+            # Filter orders by date
+            filtered_orders = []
+            for order in all_orders:
+                order_time = order.get("order_time", "")
+                if not order_time:
+                    continue
+                
+                # Extract the date part from the order_time string
+                try:
+                    if "T" in order_time:
+                        # ISO format: "2025-06-15T14:30:00"
+                        order_date_str = order_time.split("T")[0]
+                    else:
+                        # Regular format: "2025-06-15 14:30:00"
+                        order_date_str = order_time.split(" ")[0]
+                    
+                    order_date = datetime.strptime(order_date_str, "%Y-%m-%d").date()
+                    
+                    # Check if order date is in range
+                    if ((not start_date_obj or order_date >= start_date_obj) and
+                        (not end_date_obj or order_date <= end_date_obj)):
+                        filtered_orders.append(order)
+                except Exception as e:
+                    continue
+            
+            return filtered_orders
+            
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            return []
+    
+    def get_monthly_expense_summary(self, year: int, month: int) -> Dict[str, Any]:
+        """Get a summary of expenses by category for a specific month and year."""
+        def fetch_monthly_expense_summary():
+            max_retries = 3
+            attempt = 0
+            
+            while attempt < max_retries:
+                if not self._ensure_authenticated():                    return {"total": 0, "categories": {}, "year": year, "month": month}
+                    
+                try:                    response = self.session.get(
+                        f"{self.base_url}/expenses/summary/{year}/{month}", 
+                        headers=self.get_headers(),
+                        timeout=30
+                    )
+                    
+                    if response.status_code == 200:
+                        summary = response.json()
+                        return summary
+                    elif response.status_code == 401:
+                        if self._handle_auth_error(response):                            attempt += 1
+                            continue
+                        else:                            return {"total": 0, "categories": {}, "year": year, "month": month}
+                    else:                        # Implement exponential backoff for server errors
+                        if response.status_code >= 500:
+                            sleep_time = min(2 ** attempt, 30)  # Max 30 seconds                            time.sleep(sleep_time)
+                            attempt += 1
+                            continue
+                        return {"total": 0, "categories": {}, "year": year, "month": month}
+                except Exception as e:
+                    sleep_time = min(2 ** attempt, 30)  # Max 30 seconds                    time.sleep(sleep_time)
+                    attempt += 1
+                    
+                if attempt >= max_retries:                    return {"total": 0, "categories": {}, "year": year, "month": month}
+            
+            return {"total": 0, "categories": {}, "year": year, "month": month}  # Fallback if we somehow exit the loop
+                
+        # Make sure we're authenticated before trying to fetch or use cache
+        if not self._ensure_authenticated():            return {"total": 0, "categories": {}, "year": year, "month": month}
+            
+        # Use cache with a key that includes year and month parameters
+        cache_key = f"expenses_summary_{year}_{month}"
+        return self._get_from_cache_or_fetch(cache_key, fetch_monthly_expense_summary, 120)
+    
+    def create_variant(self, variant_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Create a new product variant.
+        
+        Args:
+            variant_data: A dictionary containing variant data including:
+                product_id, barcode, price, quantity, size, color
+        
+        Returns:
+            The created variant data or None if creation failed
+        
+        Raises:
+            Exception: If there was an error creating the variant
+        """
+        try:
+            response = self.session.post(
+                f"{self.base_url}/variants", 
+                json=variant_data, 
+                headers=self.get_headers()
+            )
+            
+            if response.status_code == 200 or response.status_code == 201:
+                return response.json()
+            else:
+                error_msg = response.json().get('detail', 'Unknown error') if response.content else 'Server error'
+                raise Exception(f"Failed to create variant: {error_msg} (Status: {response.status_code})")
+        except Exception as e:
+            raise Exception(f"Failed to create variant: {str(e)}")
+
+    def _get_from_cache_or_fetch(self, cache_key: str, fetch_method, timeout: int = None):
+        """
+        Helper method to get data from cache or call fetch_method if not in cache or expired.
+        
+        Args:
+            cache_key: The key to use for caching
+            fetch_method: A callable that returns the data if not in cache
+            timeout: Cache timeout in seconds (None uses default)
+        
+        Returns:
+            The cached or freshly fetched data
+        """
+        current_time = time.time()
+        cache_timeout = timeout if timeout is not None else self._default_cache_timeout
+        
+        # Check if data is in cache and not expired
+        if cache_key in self._cache and cache_key in self._cache_timeout:
+            if current_time - self._cache_timeout[cache_key] < cache_timeout:                return self._cache[cache_key]
+        
+        # Fetch fresh data        data = fetch_method()
+        
+        # Cache the result
+        self._cache[cache_key] = data
+        self._cache_timeout[cache_key] = current_time
+        
+        return data
+    
+    def clear_cache(self, cache_key: str = None):
+        """
+        Clear the cache for a specific key or all cache if key is None.
+        If cache_key doesn't contain an exact match but ends with "_", 
+        it will clear all keys starting with that prefix.
+        
+        Args:
+            cache_key: The key to clear, or None to clear all cache
+        """
+        if cache_key is None:
+            self._cache = {}
+            self._cache_timeout = {}        elif cache_key in self._cache:
+            del self._cache[cache_key]
+            if cache_key in self._cache_timeout:
+                del self._cache_timeout[cache_key]        elif cache_key.endswith("_"):
+            # Clear all keys with matching prefix
+            prefix = cache_key
+            keys_to_delete = [k for k in self._cache.keys() if k.startswith(prefix)]
+            for k in keys_to_delete:
+                del self._cache[k]
+                if k in self._cache_timeout:
+                    del self._cache_timeout[k]
+            def _ensure_authenticated(self):
+        """Ensure we have a valid authentication token.
+        Returns True if we're authenticated, False otherwise."""
+        if not self.token:            # Try to get credentials from environment variables or use defaults
+            username = os.environ.get("API_USERNAME", "admin")
+            password = os.environ.get("API_PASSWORD", "password123")
+            return self.login(username, password)
+        return True
+        
+    def _handle_auth_error(self, response):
+        """Handle 401 authentication errors by attempting to re-authenticate.
+        Returns True if re-authentication was successful."""
+        if response.status_code == 401:
+            # Try to get credentials from environment variables or use defaults
+            username = os.environ.get("API_USERNAME", "admin")
+            password = os.environ.get("API_PASSWORD", "password123")
+            return self.login(username, password)
+        return False

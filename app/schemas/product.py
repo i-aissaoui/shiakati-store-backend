@@ -21,6 +21,14 @@ class ProductBase(BaseModel):
         ...,
         description="ID of the category this product belongs to"
     )
+    image_url: Optional[str] = Field(
+        None,
+        description="URL to the main product image"
+    )
+    additional_images: Optional[str] = Field(
+        None,
+        description="JSON string with additional product image URLs"
+    )
 
 class ProductCreate(ProductBase):
     pass
@@ -36,6 +44,8 @@ class ProductOut(BaseModel):
     description: Optional[str]
     category_id: Optional[int] = None
     category_name: str = "Uncategorized"
+    image_url: Optional[str] = None
+    additional_images: Optional[str] = None
     created_at: datetime
     variants_count: int = 0
     total_stock: float = 0

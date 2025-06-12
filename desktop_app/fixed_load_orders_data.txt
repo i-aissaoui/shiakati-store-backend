@@ -1,0 +1,98 @@
+    def load_orders_data(self):
+        """Load orders data into the orders table."""
+        try:
+            orders = self.api_client.get_orders()
+            
+            self.orders_table.setRowCount(0)  # Clear existing rows
+            
+            if not orders:
+                return
+                
+            for order in orders:
+                try:
+                    row = self.orders_table.rowCount()
+                    self.orders_table.insertRow(row)
+                    
+                    # Format the order time
+                    order_time = QDateTime.fromString(order.get("order_time"), Qt.ISODateWithMs)
+                    formatted_date = order_time.toString("yyyy-MM-dd hh:mm")
+                    
+                    # Get customer info from the order data
+                    customer_name = order.get("customer_name", "N/A")
+                    phone_number = order.get("phone_number", "N/A")
+                    status = order.get("status", "N/A").capitalize()
+                    
+                    # Create and style status item
+                    status_item = QTableWidgetItem(status)
+                    status_color = {
+                        "Delivered": "#27ae60",  # Green
+                        "Shipped": "#9b59b6",    # Purple
+                        "Confirmed": "#2ecc71",  # Light green
+                        "Pending": "#f39c12",    # Orange
+                        "Cancelled": "#e74c3c"   # Red
+                    }.get(status, "#2c3e50")    # Default dark gray
+                    status_item.setForeground(QColor(status_color))
+                    
+                    # Get the first item for display in the main table
+                    first_item = order.get("items", [{}])[0] if order.get("items") else {}
+                    product_name = first_item.get("product_name", "N/A")
+                    size = first_item.get("size", "N/A") 
+                    color = first_item.get("color", "N/A")
+                    
+                    # Ensure N/A is used for None or empty strings
+                    if size is None or str(size).strip() == "" or str(size).lower() == "none":
+                        size = "N/A"
+                    if color is None or str(color).strip() == "" or str(color).lower() == "none":
+                        color = "N/A"
+                        
+                    items_summary = f"{product_name} ({size}, {color})"
+                    
+                    # Set items with proper formatting
+                    self.orders_table.setItem(row, 0, QTableWidgetItem(str(order.get("id", "N/A"))))
+                    self.orders_table.setItem(row, 1, QTableWidgetItem(formatted_date))
+                    self.orders_table.setItem(row, 2, QTableWidgetItem(customer_name))
+                    self.orders_table.setItem(row, 3, QTableWidgetItem(phone_number))
+                    self.orders_table.setItem(row, 4, QTableWidgetItem(items_summary))
+                    self.orders_table.setItem(row, 5, QTableWidgetItem(str(first_item.get("quantity", 0))))
+                    self.orders_table.setItem(row, 6, QTableWidgetItem(self.format_price(float(order.get("total", 0)))))
+                    self.orders_table.setItem(row, 7, QTableWidgetItem(str(order.get("delivery_method", "N/A")).capitalize()))
+                    self.orders_table.setItem(row, 8, status_item)
+                    self.orders_table.setItem(row, 9, QTableWidgetItem(order.get("notes", "")))
+                    
+                except Exception as item_error:
+                    continue
+            
+            # Adjust column widths
+            header = self.orders_table.horizontalHeader()
+            # Fixed width columns
+            header.setSectionResizeMode(0, QHeaderView.Fixed)  # ID
+            header.setSectionResizeMode(1, QHeaderView.Fixed)  # Date
+            header.setSectionResizeMode(3, QHeaderView.Fixed)  # Phone
+            header.setSectionResizeMode(5, QHeaderView.Fixed)  # Quantity
+            header.setSectionResizeMode(6, QHeaderView.Fixed)  # Total 
+            header.setSectionResizeMode(7, QHeaderView.Fixed)  # Delivery
+            header.setSectionResizeMode(8, QHeaderView.Fixed)  # Status
+            
+            # Stretching columns
+            header.setSectionResizeMode(2, QHeaderView.Stretch)  # Customer name
+            header.setSectionResizeMode(4, QHeaderView.Stretch)  # Product
+            header.setSectionResizeMode(9, QHeaderView.Stretch)  # Notes
+            
+            # Set specific widths
+            self.orders_table.setColumnWidth(0, 80)   # ID
+            self.orders_table.setColumnWidth(1, 150)  # Date
+            self.orders_table.setColumnWidth(3, 120)  # Phone
+            self.orders_table.setColumnWidth(5, 80)   # Quantity
+            self.orders_table.setColumnWidth(6, 150)  # Total - increased significantly for "XXX.XX DZD"
+            self.orders_table.setColumnWidth(7, 120)  # Delivery - increased for "Home Delivery"
+            self.orders_table.setColumnWidth(8, 100)  # Status
+            
+            print(f"=== MAIN WINDOW: Successfully loaded {len(orders)} orders ===")
+            
+        except Exception as e:
+            print(f"Error in load_orders_data: {str(e)}")
+            QMessageBox.warning(self, "Error", f"Failed to load orders: {str(e)}")
+            import traceback
+            traceback.print_exc()  # Print full stack trace for debugging
+
+    def filter_orders(self):

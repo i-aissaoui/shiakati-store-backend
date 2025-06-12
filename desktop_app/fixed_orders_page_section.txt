@@ -1,0 +1,13 @@
+            self.orders_table.setColumnWidth(7, 120)  # Delivery - increased for "Home Delivery"
+            self.orders_table.setColumnWidth(8, 100)  # Status
+            
+            print(f"=== MAIN WINDOW: Successfully loaded {len(orders)} orders ===")
+            
+        except Exception as e:
+            print(f"Error in load_orders_data: {str(e)}")
+            QMessageBox.warning(self, "Error", f"Failed to load orders: {str(e)}")
+            import traceback
+            traceback.print_exc()  # Print full stack trace for debugging
+
+    def filter_orders(self):
+        """Filter the orders table based on search text."""

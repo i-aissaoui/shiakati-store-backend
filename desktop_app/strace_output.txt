@@ -1,0 +1,1349 @@
+9851  execve("/home/ismail/miniconda3/envs/main/bin/python", ["python", "main.py"], 0x7fffe5cfc840 /* 103 vars */) = 0
+9851  brk(NULL)                         = 0xf16d000
+9851  mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7151606e2000
+9851  readlinkat(AT_FDCWD, "/proc/self/exe", "/home/ismail/miniconda3/envs/mai"..., 4096) = 48
+9851  access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/../lib/glibc-hwcaps/x86-64-v3/libpthread.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  newfstatat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/../lib/glibc-hwcaps/x86-64-v3/", 0x7fffcf1e0b40, 0) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/../lib/glibc-hwcaps/x86-64-v2/libpthread.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  newfstatat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/../lib/glibc-hwcaps/x86-64-v2/", 0x7fffcf1e0b40, 0) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/../lib/libpthread.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  newfstatat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/../lib/", {st_mode=S_IFDIR|0775, st_size=69632, ...}, 0) = 0
+9851  openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=74707, ...}) = 0
+9851  mmap(NULL, 74707, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7151606cf000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libpthread.so.0", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=14408, ...}) = 0
+9851  mmap(NULL, 16400, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7151606ca000
+9851  mmap(0x7151606cb000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x7151606cb000
+9851  mmap(0x7151606cc000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7151606cc000
+9851  mmap(0x7151606cd000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7151606cd000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/../lib/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=14408, ...}) = 0
+9851  mmap(NULL, 16400, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7151606c5000
+9851  mmap(0x7151606c6000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x7151606c6000
+9851  mmap(0x7151606c7000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7151606c7000
+9851  mmap(0x7151606c8000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7151606c8000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/../lib/libutil.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libutil.so.1", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=14408, ...}) = 0
+9851  mmap(NULL, 16400, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7151606c0000
+9851  mmap(0x7151606c1000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x7151606c1000
+9851  mmap(0x7151606c2000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7151606c2000
+9851  mmap(0x7151606c3000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7151606c3000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/../lib/libm.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=952616, ...}) = 0
+9851  mmap(NULL, 950296, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7151605d7000
+9851  mmap(0x7151605e7000, 520192, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x10000) = 0x7151605e7000
+9851  mmap(0x715160666000, 360448, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x8f000) = 0x715160666000
+9851  mmap(0x7151606be000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe7000) = 0x7151606be000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/../lib/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\220\243\2\0\0\0\0\0"..., 832) = 832
+9851  pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+9851  fstat(3, {st_mode=S_IFREG|0755, st_size=2125328, ...}) = 0
+9851  pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+9851  mmap(NULL, 2170256, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x715160200000
+9851  mmap(0x715160228000, 1605632, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x28000) = 0x715160228000
+9851  mmap(0x7151603b0000, 323584, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1b0000) = 0x7151603b0000
+9851  mmap(0x7151603ff000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1fe000) = 0x7151603ff000
+9851  mmap(0x715160405000, 52624, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x715160405000
+9851  close(3)                          = 0
+9851  mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7151605d5000
+9851  mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7151605d3000
+9851  arch_prctl(ARCH_SET_FS, 0x7151605d6600) = 0
+9851  set_tid_address(0x7151605d68d0)   = 9851
+9851  set_robust_list(0x7151605d68e0, 24) = 0
+9851  rseq(0x7151605d6f20, 0x20, 0, 0x53053053) = 0
+9851  mprotect(0x7151603ff000, 16384, PROT_READ) = 0
+9851  mprotect(0x7151606be000, 4096, PROT_READ) = 0
+9851  mprotect(0x7151606c3000, 4096, PROT_READ) = 0
+9851  mprotect(0x7151606c8000, 4096, PROT_READ) = 0
+9851  mprotect(0x7151606cd000, 4096, PROT_READ) = 0
+9851  mprotect(0x777000, 4096, PROT_READ) = 0
+9851  mprotect(0x715160720000, 8192, PROT_READ) = 0
+9851  prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+9851  munmap(0x7151606cf000, 74707)     = 0
+9851  getrandom("\x17\x3b\xf6\xef\x04\x84\xf2\xa5", 8, GRND_NONBLOCK) = 8
+9851  brk(NULL)                         = 0xf16d000
+9851  brk(0xf18e000)                    = 0xf18e000
+9851  openat(AT_FDCWD, "/usr/share/locale/locale.alias", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=2996, ...}) = 0
+9851  read(3, "# Locale name alias data base.\n#"..., 4096) = 2996
+9851  read(3, "", 4096)                 = 0
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/snap/code/194/usr/lib/locale/en_US.UTF-8/LC_CTYPE", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/usr/lib/locale/en_US.UTF-8/LC_CTYPE", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/snap/code/194/usr/lib/locale/en_US.utf8/LC_CTYPE", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=340640, ...}) = 0
+9851  mmap(NULL, 340640, PROT_READ, MAP_PRIVATE, 3, 0) = 0x71516057f000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=27028, ...}) = 0
+9851  mmap(NULL, 27028, PROT_READ, MAP_SHARED, 3, 0) = 0x7151606db000
+9851  close(3)                          = 0
+9851  futex(0x71516040472c, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+9851  getcwd("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", 4096) = 65
+9851  getrandom("\x04\x4f\x38\x35\x22\x5e\x2d\xcb\x57\xb6\xa9\x55\x1d\xb0\xd6\xbf\xc4\xd9\x25\x88\x6a\x22\xfb\xbd", 24, GRND_NONBLOCK) = 24
+9851  gettid()                          = 9851
+9851  mmap(NULL, 1048576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x71516047f000
+9851  mmap(NULL, 266240, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x71516043e000
+9851  mmap(NULL, 135168, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x71516041d000
+9851  mmap(NULL, 16384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7151606d7000
+9851  brk(0xf1af000)                    = 0xf1af000
+9851  stat("/home/ismail/miniconda3/envs/main/bin/python", {st_mode=S_IFREG|0775, st_size=24663120, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/pyvenv.cfg", O_RDONLY) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/pyvenv.cfg", O_RDONLY) = -1 ENOENT (No such file or directory)
+9851  readlink("/home/ismail/miniconda3/envs/main/bin/python", "python3.11", 4096) = 10
+9851  readlink("/home/ismail/miniconda3/envs/main/bin/python3.11", 0x7fffcf1dc0f0, 4096) = -1 EINVAL (Invalid argument)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/python._pth", O_RDONLY) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/python3.11._pth", O_RDONLY) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/pybuilddir.txt", O_RDONLY) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/bin/Modules/Setup.local", 0x7fffcf1e10c0) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/bin/lib/python311.zip", 0x7fffcf1e0e60) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python311.zip", 0x7fffcf1e0e60) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/lib/python311.zip", 0x7fffcf1e0e60) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/lib/python311.zip", 0x7fffcf1e0e60) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/lib/python311.zip", 0x7fffcf1e0e60) = -1 ENOENT (No such file or directory)
+9851  stat("/home/lib/python311.zip", 0x7fffcf1e0e60) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/bin/lib/python3.11/os.py", 0x7fffcf1e0c90) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/bin/lib/python3.11/os.pyc", 0x7fffcf1e0c90) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/os.py", {st_mode=S_IFREG|0664, st_size=39530, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/bin/lib/python3.11/lib-dynload", 0x7fffcf1e0e68) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/etc/localtime", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=735, ...}) = 0
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=735, ...}) = 0
+9851  read(3, "TZif2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\10\0\0\0\0"..., 4096) = 735
+9851  lseek(3, -439, SEEK_CUR)          = 296
+9851  read(3, "TZif2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\10\0\0\0\0"..., 4096) = 439
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python311.zip", 0x7fffcf1e08e0) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib", {st_mode=S_IFDIR|0775, st_size=69632, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python311.zip", 0x7fffcf1e0bb0) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+9851  fstat(3, {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  getdents64(3, 0xf1a5800 /* 211 entries */, 32768) = 7104
+9851  getdents64(3, 0xf1a5800 /* 0 entries */, 32768) = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/encodings/__init__.cpython-311-x86_64-linux-gnu.so", 0x7fffcf1e0bb0) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/encodings/__init__.abi3.so", 0x7fffcf1e0c00) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/encodings/__init__.so", 0x7fffcf1e0c00) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/encodings/__init__.py", {st_mode=S_IFREG|0664, st_size=5884, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/encodings/__init__.py", {st_mode=S_IFREG|0664, st_size=5884, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/encodings/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fcntl(3, F_GETFD)                 = 0x1 (flags FD_CLOEXEC)
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=6711, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0920)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=6711, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\374\26\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\6\0\0"..., 6712) = 6711
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  brk(0xf1e8000)                    = 0xf1e8000
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/encodings", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/encodings", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/encodings", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/encodings", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+9851  fstat(3, {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  getdents64(3, 0xf17e450 /* 125 entries */, 32768) = 4224
+9851  getdents64(3, 0xf17e450 /* 0 entries */, 32768) = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/encodings/aliases.py", {st_mode=S_IFREG|0664, st_size=15677, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/encodings/aliases.py", {st_mode=S_IFREG|0664, st_size=15677, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/encodings/__pycache__/aliases.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=12901, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1dfd90)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=12901, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah==\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\5\0\0"..., 12902) = 12901
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/encodings", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/encodings/utf_8.py", {st_mode=S_IFREG|0664, st_size=1005, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/encodings/utf_8.py", {st_mode=S_IFREG|0664, st_size=1005, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/encodings/__pycache__/utf_8.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=2311, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e08f0)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=2311, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\355\3\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\5\0\0"..., 2312) = 2311
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  rt_sigaction(SIGPIPE, {sa_handler=SIG_IGN, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK, sa_restorer=0x715160245330}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGXFSZ, {sa_handler=SIG_IGN, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK, sa_restorer=0x715160245330}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGHUP, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGINT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGQUIT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGILL, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGTRAP, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGABRT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGBUS, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGFPE, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGKILL, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGUSR1, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGSEGV, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGUSR2, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGPIPE, NULL, {sa_handler=SIG_IGN, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK, sa_restorer=0x715160245330}, 8) = 0
+9851  rt_sigaction(SIGALRM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGTERM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGSTKFLT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGCHLD, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGCONT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGSTOP, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGTSTP, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGTTIN, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGTTOU, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGURG, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGXCPU, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGXFSZ, NULL, {sa_handler=SIG_IGN, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK, sa_restorer=0x715160245330}, 8) = 0
+9851  rt_sigaction(SIGVTALRM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGPROF, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGWINCH, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGIO, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGPWR, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGSYS, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_2, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_3, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_4, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_5, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_6, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_7, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_8, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_9, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_10, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_11, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_12, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_13, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_14, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_15, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_16, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_17, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_18, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_19, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_20, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_21, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_22, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_23, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_24, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_25, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_26, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_27, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_28, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_29, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_30, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_31, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGRT_32, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  rt_sigaction(SIGINT, {sa_handler=0x4aac97, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK, sa_restorer=0x715160245330}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+9851  fstat(0, {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0x4), ...}) = 0
+9851  fcntl(0, F_GETFD)                 = 0
+9851  fstat(0, {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0x4), ...}) = 0
+9851  ioctl(0, TCGETS, {c_iflag=BRKINT|ICRNL|IXON|IXANY|IMAXBEL|IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD|HUPCL, c_lflag=ISIG|ICANON|ECHO|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+9851  lseek(0, 0, SEEK_CUR)             = -1 ESPIPE (Illegal seek)
+9851  ioctl(0, TCGETS, {c_iflag=BRKINT|ICRNL|IXON|IXANY|IMAXBEL|IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD|HUPCL, c_lflag=ISIG|ICANON|ECHO|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+9851  fcntl(1, F_GETFD)                 = 0
+9851  fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0x4), ...}) = 0
+9851  ioctl(1, TCGETS, {c_iflag=BRKINT|ICRNL|IXON|IXANY|IMAXBEL|IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD|HUPCL, c_lflag=ISIG|ICANON|ECHO|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+9851  lseek(1, 0, SEEK_CUR)             = -1 ESPIPE (Illegal seek)
+9851  ioctl(1, TCGETS, {c_iflag=BRKINT|ICRNL|IXON|IXANY|IMAXBEL|IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD|HUPCL, c_lflag=ISIG|ICANON|ECHO|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+9851  fcntl(2, F_GETFD)                 = 0
+9851  fstat(2, {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0x4), ...}) = 0
+9851  ioctl(2, TCGETS, {c_iflag=BRKINT|ICRNL|IXON|IXANY|IMAXBEL|IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD|HUPCL, c_lflag=ISIG|ICANON|ECHO|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+9851  lseek(2, 0, SEEK_CUR)             = -1 ESPIPE (Illegal seek)
+9851  ioctl(2, TCGETS, {c_iflag=BRKINT|ICRNL|IXON|IXANY|IMAXBEL|IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD|HUPCL, c_lflag=ISIG|ICANON|ECHO|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+9851  mmap(NULL, 1048576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x715160100000
+9851  stat("/home/ismail/miniconda3/envs/main/bin/pyvenv.cfg", 0x7fffcf1e0960) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/pyvenv.cfg", 0x7fffcf1e0960) = -1 ENOENT (No such file or directory)
+9851  geteuid()                         = 1000
+9851  getuid()                          = 1000
+9851  getegid()                         = 1000
+9851  getgid()                          = 1000
+9851  stat("/home/ismail/.local/lib/python3.11/site-packages", 0x7fffcf1e0960) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+9851  fstat(3, {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  getdents64(3, 0xf1d9f90 /* 132 entries */, 32768) = 5296
+9851  getdents64(3, 0xf1d9f90 /* 0 entries */, 32768) = 0
+9851  close(3)                          = 0
+9851  lstat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/distutils-precedence.pth", {st_mode=S_IFREG|0664, st_size=151, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/distutils-precedence.pth", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=151, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e06d0)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  read(3, "import os; var = 'SETUPTOOLS_USE"..., 8192) = 151
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4
+9851  fstat(4, {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  getdents64(4, 0xf1dfbf0 /* 78 entries */, 32768) = 4904
+9851  getdents64(4, 0xf1dfbf0 /* 0 entries */, 32768) = 0
+9851  close(4)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4
+9851  fstat(4, {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  brk(0xf209000)                    = 0xf209000
+9851  getdents64(4, 0xf1e0400 /* 132 entries */, 32768) = 5296
+9851  getdents64(4, 0xf1e0400 /* 0 entries */, 32768) = 0
+9851  brk(0xf201000)                    = 0xf201000
+9851  close(4)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/_distutils_hack/__init__.cpython-311-x86_64-linux-gnu.so", 0x7fffcf1e0130) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/_distutils_hack/__init__.abi3.so", 0x7fffcf1e0130) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/_distutils_hack/__init__.so", 0x7fffcf1e0130) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/_distutils_hack/__init__.py", {st_mode=S_IFREG|0664, st_size=6755, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/_distutils_hack/__init__.py", {st_mode=S_IFREG|0664, st_size=6755, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/_distutils_hack/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+9851  fstat(4, {st_mode=S_IFREG|0664, st_size=11927, ...}) = 0
+9851  ioctl(4, TCGETS, 0x7fffcf1dfe50)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(4, 0, SEEK_CUR)             = 0
+9851  lseek(4, 0, SEEK_CUR)             = 0
+9851  fstat(4, {st_mode=S_IFREG|0664, st_size=11927, ...}) = 0
+9851  read(4, "\247\r\r\n\0\0\0\0\16\352\3hc\32\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\6\0\0"..., 11928) = 11927
+9851  read(4, "", 1)                    = 0
+9851  close(4)                          = 0
+9851  read(3, "", 8192)                 = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/main.py", {st_mode=S_IFREG|0664, st_size=1502, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/main.py", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=1502, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e1050)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, -22, SEEK_END)           = 1480
+9851  lseek(3, 0, SEEK_CUR)             = 1480
+9851  read(3, ")\n        sys.exit(1)\n", 4096) = 22
+9851  lseek(3, 0, SEEK_END)             = 1502
+9851  lseek(3, 0, SEEK_CUR)             = 1502
+9851  lseek(3, 0, SEEK_SET)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=1502, ...}) = 0
+9851  read(3, "import os\nimport sys\nimport trac"..., 1503) = 1502
+9851  read(3, "", 1)                    = 0
+9851  lseek(3, 0, SEEK_SET)             = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/main.py", {st_mode=S_IFREG|0664, st_size=1502, ...}) = 0
+9851  readlink("main.py", 0x7fffcf1d07a0, 4096) = -1 EINVAL (Invalid argument)
+9851  getcwd("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", 1024) = 65
+9851  readlink("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/main.py", 0x7fffcf1d0340, 1023) = -1 EINVAL (Invalid argument)
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/main.py", O_RDONLY) = 3
+9851  ioctl(3, FIOCLEX)                 = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=1502, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e1730)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=1502, ...}) = 0
+9851  read(3, "import os\nimport sys\nimport trac"..., 4096) = 1502
+9851  lseek(3, 0, SEEK_SET)             = 0
+9851  read(3, "import os\nimport sys\nimport trac"..., 4096) = 1502
+9851  read(3, "", 4096)                 = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+9851  fstat(3, {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  brk(0xf225000)                    = 0xf225000
+9851  getdents64(3, 0xf1fcbc0 /* 28 entries */, 32768) = 1056
+9851  getdents64(3, 0xf1fcbc0 /* 0 entries */, 32768) = 0
+9851  brk(0xf21d000)                    = 0xf21d000
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/traceback.py", {st_mode=S_IFREG|0664, st_size=40547, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/traceback.py", {st_mode=S_IFREG|0664, st_size=40547, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/traceback.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=48975, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0c10)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=48975, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ahc\236\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\6\0\0"..., 48976) = 48975
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/collections/__init__.cpython-311-x86_64-linux-gnu.so", 0x7fffcf1e0360) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/collections/__init__.abi3.so", 0x7fffcf1e0360) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/collections/__init__.so", 0x7fffcf1e0360) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/collections/__init__.py", {st_mode=S_IFREG|0664, st_size=52018, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/collections/__init__.py", {st_mode=S_IFREG|0664, st_size=52018, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/collections/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=78469, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0080)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=78469, ...}) = 0
+9851  brk(0xf23f000)                    = 0xf23f000
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah2\313\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\5\0\0"..., 78470) = 78469
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  brk(0xf22c000)                    = 0xf22c000
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/keyword.py", {st_mode=S_IFREG|0664, st_size=1061, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/keyword.py", {st_mode=S_IFREG|0664, st_size=1061, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/keyword.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=1322, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df990)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=1322, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah%\4\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\3\0\0"..., 1323) = 1322
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/operator.py", {st_mode=S_IFREG|0664, st_size=10965, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/operator.py", {st_mode=S_IFREG|0664, st_size=10965, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/operator.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=19013, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df9e0)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=19013, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\325*\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\4\0\0"..., 19014) = 19013
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/reprlib.py", {st_mode=S_IFREG|0664, st_size=5437, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/reprlib.py", {st_mode=S_IFREG|0664, st_size=5437, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/reprlib.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=9932, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df9e0)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=9932, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah=\25\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\4\0\0"..., 9933) = 9932
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/collections", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/collections", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/collections", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/collections", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+9851  fstat(3, {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  getdents64(3, 0xf20d4f0 /* 5 entries */, 32768) = 144
+9851  getdents64(3, 0xf20d4f0 /* 0 entries */, 32768) = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/collections/abc.py", {st_mode=S_IFREG|0664, st_size=119, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/collections/abc.py", {st_mode=S_IFREG|0664, st_size=119, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/collections/__pycache__/abc.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=548, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0570)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=548, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ahw\0\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\2\0\0"..., 549) = 548
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/linecache.py", {st_mode=S_IFREG|0664, st_size=5649, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/linecache.py", {st_mode=S_IFREG|0664, st_size=5649, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/linecache.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=7698, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0570)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=7698, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\21\26\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\2\0\0"..., 7699) = 7698
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/functools.py", {st_mode=S_IFREG|0664, st_size=38413, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/functools.py", {st_mode=S_IFREG|0664, st_size=38413, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/functools.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=46887, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1dfe80)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=46887, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\r\226\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\7\0\0"..., 46888) = 46887
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/types.py", {st_mode=S_IFREG|0664, st_size=10067, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/types.py", {st_mode=S_IFREG|0664, st_size=10067, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/types.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=14814, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df790)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=14814, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233AhS'\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\4\0\0"..., 14815) = 14814
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/tokenize.py", {st_mode=S_IFREG|0664, st_size=26336, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/tokenize.py", {st_mode=S_IFREG|0664, st_size=26336, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/tokenize.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=30612, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1dfe80)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=30612, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\340f\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\t\0\0"..., 30613) = 30612
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re/__init__.cpython-311-x86_64-linux-gnu.so", 0x7fffcf1dfa20) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re/__init__.abi3.so", 0x7fffcf1dfa20) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re/__init__.so", 0x7fffcf1dfa20) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re/__init__.py", {st_mode=S_IFREG|0664, st_size=15889, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re/__init__.py", {st_mode=S_IFREG|0664, st_size=15889, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/re/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=19568, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df790)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=19568, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\340\233Ah\21>\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\6\0\0"..., 19569) = 19568
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/enum.py", {st_mode=S_IFREG|0664, st_size=79583, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/enum.py", {st_mode=S_IFREG|0664, st_size=79583, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/enum.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=88248, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df0a0)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=88248, ...}) = 0
+9851  brk(0xf259000)                    = 0xf259000
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\3376\1\0\343\0\0\0\0\0\0\0\0\0\0\0\0\10\0\0"..., 88249) = 88248
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/re", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+9851  fstat(3, {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  getdents64(3, 0xf2287b0 /* 8 entries */, 32768) = 248
+9851  getdents64(3, 0xf2287b0 /* 0 entries */, 32768) = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re/_compiler.py", {st_mode=S_IFREG|0664, st_size=26089, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re/_compiler.py", {st_mode=S_IFREG|0664, st_size=26089, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/re/__pycache__/_compiler.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=32121, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1dec00)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=32121, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\340\233Ah\351e\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\10\0\0"..., 32122) = 32121
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re/_parser.py", {st_mode=S_IFREG|0664, st_size=42420, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re/_parser.py", {st_mode=S_IFREG|0664, st_size=42420, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/re/__pycache__/_parser.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=50136, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1de070)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=50136, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\340\233Ah\264\245\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\v\0\0"..., 50137) = 50136
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re/_constants.py", {st_mode=S_IFREG|0664, st_size=5930, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re/_constants.py", {st_mode=S_IFREG|0664, st_size=5930, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/re/__pycache__/_constants.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=6204, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1dd980)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=6204, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\340\233Ah*\27\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\24\0\0"..., 6205) = 6204
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re/_casefix.py", {st_mode=S_IFREG|0664, st_size=5446, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/re/_casefix.py", {st_mode=S_IFREG|0664, st_size=5446, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/re/__pycache__/_casefix.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=2100, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1de510)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=2100, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\340\233AhF\25\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\4\0\0"..., 2101) = 2100
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/copyreg.py", {st_mode=S_IFREG|0664, st_size=7677, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/copyreg.py", {st_mode=S_IFREG|0664, st_size=7677, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/copyreg.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=8432, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df0a0)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=8432, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\375\35\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\6\0\0"..., 8433) = 8432
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/token.py", {st_mode=S_IFREG|0664, st_size=2386, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/token.py", {st_mode=S_IFREG|0664, st_size=2386, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/token.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=3977, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df790)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=3977, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233AhR\t\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\17\0\0"..., 3978) = 3977
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/textwrap.py", {st_mode=S_IFREG|0664, st_size=19718, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/textwrap.py", {st_mode=S_IFREG|0664, st_size=19718, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/textwrap.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=19849, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0570)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=19849, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\6M\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\5\0\0"..., 19850) = 19849
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/contextlib.py", {st_mode=S_IFREG|0664, st_size=27414, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/contextlib.py", {st_mode=S_IFREG|0664, st_size=27414, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/contextlib.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=33321, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0570)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=33321, ...}) = 0
+9851  brk(0xf27f000)                    = 0xf27f000
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\26k\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\7\0\0"..., 33322) = 33321
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  brk(0xf277000)                    = 0xf277000
+9851  mmap(NULL, 1048576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x715160000000
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/__init__.cpython-311-x86_64-linux-gnu.so", 0x7fffcf1e0a50) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/__init__.abi3.so", 0x7fffcf1e0a50) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/__init__.so", 0x7fffcf1e0a50) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/__init__.py", {st_mode=S_IFREG|0664, st_size=960, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/__init__.py", {st_mode=S_IFREG|0664, st_size=960, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=295, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e07c0)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=295, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0q\227\201g\300\3\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\4\0\0"..., 296) = 295
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/pkgutil.py", {st_mode=S_IFREG|0664, st_size=24638, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/pkgutil.py", {st_mode=S_IFREG|0664, st_size=24638, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/pkgutil.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=31832, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0000)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=31832, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah>`\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\4\0\0"..., 31833) = 31832
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/importlib/__init__.cpython-311-x86_64-linux-gnu.so", 0x7fffcf1dfba0) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/importlib/__init__.abi3.so", 0x7fffcf1dfba0) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/importlib/__init__.so", 0x7fffcf1dfba0) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/importlib/__init__.py", {st_mode=S_IFREG|0664, st_size=6089, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/importlib/__init__.py", {st_mode=S_IFREG|0664, st_size=6089, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/importlib/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=6914, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df910)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=6914, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\311\27\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\5\0\0"..., 6915) = 6914
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/warnings.py", {st_mode=S_IFREG|0664, st_size=21110, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/warnings.py", {st_mode=S_IFREG|0664, st_size=21110, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/warnings.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=25315, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df220)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=25315, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233AhvR\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\6\0\0"..., 25316) = 25315
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/importlib", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/importlib", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/importlib", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/importlib", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+9851  fstat(3, {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  getdents64(3, 0xf26b920 /* 14 entries */, 32768) = 456
+9851  getdents64(3, 0xf26b920 /* 0 entries */, 32768) = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/importlib/_abc.py", {st_mode=S_IFREG|0664, st_size=1852, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/importlib/_abc.py", {st_mode=S_IFREG|0664, st_size=1852, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/importlib/__pycache__/_abc.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=2597, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df250)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=2597, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah<\7\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\5\0\0"..., 2598) = 2597
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/threading.py", {st_mode=S_IFREG|0664, st_size=58231, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/threading.py", {st_mode=S_IFREG|0664, st_size=58231, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/threading.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=70306, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df250)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=70306, ...}) = 0
+9851  brk(0xf29d000)                    = 0xf29d000
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ahw\343\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\5\0\0"..., 70307) = 70306
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/_weakrefset.py", {st_mode=S_IFREG|0664, st_size=5893, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/_weakrefset.py", {st_mode=S_IFREG|0664, st_size=5893, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/_weakrefset.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=13391, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1deb60)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=13391, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\5\27\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\4\0\0"..., 13392) = 13391
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  gettid()                          = 9851
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/weakref.py", {st_mode=S_IFREG|0664, st_size=21513, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/weakref.py", {st_mode=S_IFREG|0664, st_size=21513, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/weakref.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=35211, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df910)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=35211, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\tT\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\5\0\0"..., 35212) = 35211
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/typing.py", {st_mode=S_IFREG|0664, st_size=120951, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/typing.py", {st_mode=S_IFREG|0664, st_size=120951, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/typing.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=161909, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df910)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=161909, ...}) = 0
+9851  mmap(NULL, 163840, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x71515ffd8000
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ahw\330\1\0\343\0\0\0\0\0\0\0\0\0\0\0\0\17\0\0"..., 161910) = 161909
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  munmap(0x71515ffd8000, 163840)    = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload/_typing.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=25704, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload/_typing.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=25704, ...}) = 0
+9851  mmap(NULL, 16624, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7151606d2000
+9851  mmap(0x7151606d3000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x7151606d3000
+9851  mmap(0x7151606d4000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7151606d4000
+9851  mmap(0x7151606d5000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7151606d5000
+9851  close(3)                          = 0
+9851  mprotect(0x7151606d5000, 4096, PROT_READ) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/PyQt5.pkg", 0x7fffcf1e0700) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/PyQt5.pkg", 0x7fffcf1e0700) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python311.zip/PyQt5.pkg", 0x7fffcf1e0700) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/PyQt5.pkg", 0x7fffcf1e0700) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/lib-dynload/PyQt5.pkg", 0x7fffcf1e0700) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/__init__.cpython-311-x86_64-linux-gnu.so", 0x7fffcf1e0750) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/__init__.abi3.so", 0x7fffcf1e0750) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/__init__.so", 0x7fffcf1e0750) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/__init__.py", {st_mode=S_IFREG|0664, st_size=960, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5.pkg", 0x7fffcf1e0750) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+9851  fstat(3, {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  brk(0xf2c5000)                    = 0xf2c5000
+9851  getdents64(3, 0xf29c110 /* 46 entries */, 32768) = 1880
+9851  getdents64(3, 0xf29c110 /* 0 entries */, 32768) = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/QtWidgets.abi3.so", {st_mode=S_IFREG|0664, st_size=7292248, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/QtWidgets.abi3.so", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=7292248, ...}) = 0
+9851  mmap(NULL, 5512584, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515fa00000
+9851  mmap(0x71515fb33000, 2453504, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x133000) = 0x71515fb33000
+9851  mmap(0x71515fd8a000, 1347584, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x38a000) = 0x71515fd8a000
+9851  mmap(0x71515fed3000, 454656, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4d3000) = 0x71515fed3000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../glibc-hwcaps/x86-64-v3/libQt5Widgets.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  newfstatat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../glibc-hwcaps/x86-64-v3/", 0x7fffcf1dfaf0, 0) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../glibc-hwcaps/x86-64-v2/libQt5Widgets.so.5", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  newfstatat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../glibc-hwcaps/x86-64-v2/", 0x7fffcf1dfaf0, 0) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../libQt5Widgets.so.5", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=5476616, ...}) = 0
+9851  mmap(NULL, 5480232, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515f400000
+9851  mmap(0x71515f55c000, 2404352, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x15c000) = 0x71515f55c000
+9851  mmap(0x71515f7a7000, 1445888, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3a7000) = 0x71515f7a7000
+9851  mmap(0x71515f908000, 204800, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x507000) = 0x71515f908000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../libQt5Gui.so.5", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=4548600, ...}) = 0
+9851  mmap(NULL, 4591304, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515ee00000
+9851  mmap(0x71515eee6000, 2416640, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe6000) = 0x71515eee6000
+9851  mmap(0x71515f134000, 1101824, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x334000) = 0x71515f134000
+9851  mmap(0x71515f241000, 86016, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x441000) = 0x71515f241000
+9851  mmap(0x71515f256000, 44744, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x71515f256000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../libQt5Core.so.5", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\247=\n\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=4697120, ...}) = 0
+9851  mmap(NULL, 4714600, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515e800000
+9851  mmap(0x71515e897000, 1941504, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x97000) = 0x71515e897000
+9851  mmap(0x71515ea71000, 2080768, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x271000) = 0x71515ea71000
+9851  mmap(0x71515ec6d000, 61440, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x46c000) = 0x71515ec6d000
+9851  mmap(0x71515ec7c000, 12392, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x71515ec7c000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../libGL.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/../lib/libGL.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=74707, ...}) = 0
+9851  mmap(NULL, 74707, PROT_READ, MAP_PRIVATE, 3, 0) = 0x71515ffed000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libGL.so.1", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=547136, ...}) = 0
+9851  mmap(NULL, 551152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515ff66000
+9851  mmap(0x71515ffa9000, 131072, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x43000) = 0x71515ffa9000
+9851  mmap(0x71515ffc9000, 81920, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x63000) = 0x71515ffc9000
+9851  mmap(0x71515ffdd000, 61440, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x77000) = 0x71515ffdd000
+9851  mmap(0x71515ffec000, 2288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x71515ffec000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../libstdc++.so.6", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=17981480, ...}) = 0
+9851  mmap(NULL, 2177152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515e400000
+9851  mprotect(0x71515e4a1000, 1449984, PROT_NONE) = 0
+9851  mmap(0x71515e4a1000, 1003520, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xa1000) = 0x71515e4a1000
+9851  mmap(0x71515e596000, 442368, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x196000) = 0x71515e596000
+9851  mmap(0x71515e603000, 57344, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x202000) = 0x71515e603000
+9851  mmap(0x71515e611000, 10368, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x71515e611000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../libgcc_s.so.1", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=475272, ...}) = 0
+9851  mmap(NULL, 103464, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515ff4c000
+9851  mmap(0x71515ff4f000, 73728, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x71515ff4f000
+9851  mmap(0x71515ff61000, 12288, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x15000) = 0x71515ff61000
+9851  mmap(0x71515ff64000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x17000) = 0x71515ff64000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../.././glibc-hwcaps/x86-64-v3/libpng16.so.16", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  newfstatat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../.././glibc-hwcaps/x86-64-v3/", 0x7fffcf1df9d0, 0) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../.././glibc-hwcaps/x86-64-v2/libpng16.so.16", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  newfstatat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../.././glibc-hwcaps/x86-64-v2/", 0x7fffcf1df9d0, 0) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../.././libpng16.so.16", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=268128, ...}) = 0
+9851  mmap(NULL, 245784, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515f9c3000
+9851  mprotect(0x71515f9c9000, 217088, PROT_NONE) = 0
+9851  mmap(0x71515f9c9000, 167936, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x6000) = 0x71515f9c9000
+9851  mmap(0x71515f9f2000, 45056, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2f000) = 0x71515f9f2000
+9851  mmap(0x71515f9fe000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3a000) = 0x71515f9fe000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../.././libz.so.1", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=124744, ...}) = 0
+9851  mmap(NULL, 118808, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515f9a5000
+9851  mmap(0x71515f9a8000, 73728, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x71515f9a8000
+9851  mmap(0x71515f9ba000, 28672, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x15000) = 0x71515f9ba000
+9851  mmap(0x71515f9c1000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1b000) = 0x71515f9c1000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../.././libicui18n.so.73", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=4403816, ...}) = 0
+9851  mmap(NULL, 3388216, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515e000000
+9851  mmap(0x71515e0f6000, 1699840, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xf6000) = 0x71515e0f6000
+9851  mmap(0x71515e295000, 602112, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x295000) = 0x71515e295000
+9851  mmap(0x71515e328000, 77824, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x327000) = 0x71515e328000
+9851  mmap(0x71515e33b000, 824, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x71515e33b000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../.././libicuuc.so.73", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=2522744, ...}) = 0
+9851  mmap(NULL, 2138768, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515dc00000
+9851  mprotect(0x71515dc6a000, 1617920, PROT_NONE) = 0
+9851  mmap(0x71515dc6a000, 1019904, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x6a000) = 0x71515dc6a000
+9851  mmap(0x71515dd63000, 593920, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x163000) = 0x71515dd63000
+9851  mmap(0x71515ddf5000, 81920, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1f4000) = 0x71515ddf5000
+9851  mmap(0x71515de09000, 4752, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x71515de09000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../.././libicudata.so.73", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=32011208, ...}) = 0
+9851  mmap(NULL, 32014336, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515bc00000
+9851  mmap(0x71515da87000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e86000) = 0x71515da87000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../.././libzstd.so.1", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=1177936, ...}) = 0
+9851  mmap(NULL, 1126480, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515f2ec000
+9851  mmap(0x71515f2fa000, 974848, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe000) = 0x71515f2fa000
+9851  mmap(0x71515f3e8000, 90112, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xfc000) = 0x71515f3e8000
+9851  mmap(0x71515f3fe000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x112000) = 0x71515f3fe000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../.././libgthread-2.0.so.0", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=15280, ...}) = 0
+9851  mmap(NULL, 16408, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x715160418000
+9851  mmap(0x715160419000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x715160419000
+9851  mmap(0x71516041a000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x71516041a000
+9851  mmap(0x71516041b000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x71516041b000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../.././libglib-2.0.so.0", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=1515632, ...}) = 0
+9851  mmap(NULL, 1356232, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515ecb4000
+9851  mprotect(0x71515ecd5000, 1212416, PROT_NONE) = 0
+9851  mmap(0x71515ecd5000, 630784, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x21000) = 0x71515ecd5000
+9851  mmap(0x71515ed6f000, 577536, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xbb000) = 0x71515ed6f000
+9851  mmap(0x71515edfd000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x148000) = 0x71515edfd000
+9851  mmap(0x71515edff000, 456, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x71515edff000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../libGLdispatch.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/../lib/libGLdispatch.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libGLdispatch.so.0", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=719304, ...}) = 0
+9851  mmap(NULL, 750432, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515e748000
+9851  mmap(0x71515e789000, 258048, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x41000) = 0x71515e789000
+9851  mmap(0x71515e7c8000, 77824, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x80000) = 0x71515e7c8000
+9851  mmap(0x71515e7db000, 118784, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x93000) = 0x71515e7db000
+9851  mmap(0x71515e7f8000, 29536, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x71515e7f8000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../libGLX.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/bin/../lib/libGLX.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libGLX.so.0", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0644, st_size=137792, ...}) = 0
+9851  mmap(NULL, 206184, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515f972000
+9851  mmap(0x71515f975000, 110592, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x71515f975000
+9851  mmap(0x71515f990000, 12288, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e000) = 0x71515f990000
+9851  mmap(0x71515f993000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x20000) = 0x71515f993000
+9851  mmap(0x71515f995000, 62824, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x71515f995000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../././glibc-hwcaps/x86-64-v3/libiconv.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  newfstatat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../././glibc-hwcaps/x86-64-v3/", 0x7fffcf1df850, 0) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../././glibc-hwcaps/x86-64-v2/libiconv.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+9851  newfstatat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../././glibc-hwcaps/x86-64-v2/", 0x7fffcf1df850, 0) = -1 ENOENT (No such file or directory)
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../././libiconv.so.2", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=984264, ...}) = 0
+9851  mmap(NULL, 942144, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515e661000
+9851  mmap(0x71515e664000, 81920, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x71515e664000
+9851  mmap(0x71515e678000, 839680, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x17000) = 0x71515e678000
+9851  mmap(0x71515e745000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe3000) = 0x71515e745000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../././libpcre2-8.so.0", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=675928, ...}) = 0
+9851  mmap(NULL, 660072, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515e35e000
+9851  mprotect(0x71515e362000, 638976, PROT_NONE) = 0
+9851  mmap(0x71515e362000, 458752, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x71515e362000
+9851  mmap(0x71515e3d2000, 176128, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x74000) = 0x71515e3d2000
+9851  mmap(0x71515e3fe000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x9f000) = 0x71515e3fe000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../libX11.so.6", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=1460344, ...}) = 0
+9851  mmap(NULL, 1341640, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515deb8000
+9851  mmap(0x71515ded6000, 577536, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e000) = 0x71515ded6000
+9851  mmap(0x71515df63000, 614400, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xab000) = 0x71515df63000
+9851  mmap(0x71515dff9000, 28672, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x140000) = 0x71515dff9000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../.././libxcb.so.1", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=228800, ...}) = 0
+9851  mmap(NULL, 180488, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515f945000
+9851  mmap(0x71515f953000, 81920, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe000) = 0x71515f953000
+9851  mmap(0x71515f967000, 36864, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x22000) = 0x71515f967000
+9851  mmap(0x71515f970000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2a000) = 0x71515f970000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../././libXau.so.6", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=17232, ...}) = 0
+9851  mmap(NULL, 16432, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x715160413000
+9851  mmap(0x715160414000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x715160414000
+9851  mmap(0x715160415000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x715160415000
+9851  mmap(0x715160416000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x715160416000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../././libXdmcp.so.6", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=30240, ...}) = 0
+9851  mmap(NULL, 28696, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515ff44000
+9851  mmap(0x71515ff46000, 8192, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x71515ff46000
+9851  mmap(0x71515ff48000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x71515ff48000
+9851  mmap(0x71515ff4a000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x5000) = 0x71515ff4a000
+9851  close(3)                          = 0
+9851  mprotect(0x71515ff4a000, 4096, PROT_READ) = 0
+9851  mprotect(0x715160416000, 4096, PROT_READ) = 0
+9851  mprotect(0x71515f970000, 4096, PROT_READ) = 0
+9851  mprotect(0x71515dff9000, 12288, PROT_READ) = 0
+9851  mprotect(0x71515e3fe000, 4096, PROT_READ) = 0
+9851  mprotect(0x71515e745000, 8192, PROT_READ) = 0
+9851  mprotect(0x71515e7db000, 114688, PROT_READ) = 0
+9851  mprotect(0x71515f993000, 4096, PROT_READ) = 0
+9851  mprotect(0x71515edfd000, 4096, PROT_READ) = 0
+9851  mprotect(0x71516041b000, 4096, PROT_READ) = 0
+9851  mprotect(0x71515f3fe000, 4096, PROT_READ) = 0
+9851  mprotect(0x71515da87000, 4096, PROT_READ) = 0
+9851  mprotect(0x71515ff64000, 4096, PROT_READ) = 0
+9851  mprotect(0x71515e603000, 45056, PROT_READ) = 0
+9851  mprotect(0x71515ddf5000, 77824, PROT_READ) = 0
+9851  mprotect(0x71515e328000, 73728, PROT_READ) = 0
+9851  mprotect(0x71515f9c1000, 4096, PROT_READ) = 0
+9851  mprotect(0x71515f9fe000, 4096, PROT_READ) = 0
+9851  mprotect(0x71515ffdd000, 57344, PROT_READ) = 0
+9851  mprotect(0x71515ec6d000, 53248, PROT_READ) = 0
+9851  mprotect(0x71515f241000, 69632, PROT_READ) = 0
+9851  mprotect(0x71515f908000, 184320, PROT_READ) = 0
+9851  mprotect(0x71515fed3000, 81920, PROT_READ) = 0
+9851  munmap(0x71515ffed000, 74707)     = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/sip.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=185464, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/sip.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=185464, ...}) = 0
+9851  mmap(NULL, 158480, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515f2c5000
+9851  mmap(0x71515f2cc000, 90112, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x7000) = 0x71515f2cc000
+9851  mmap(0x71515f2e2000, 28672, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1d000) = 0x71515f2e2000
+9851  mmap(0x71515f2e9000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x24000) = 0x71515f2e9000
+9851  close(3)                          = 0
+9851  mprotect(0x71515f2e9000, 4096, PROT_READ) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/QtCore.abi3.so", {st_mode=S_IFREG|0664, st_size=4131208, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/QtCore.abi3.so", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=4131208, ...}) = 0
+9851  mmap(NULL, 3237976, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515b800000
+9851  mmap(0x71515b8ae000, 1425408, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xae000) = 0x71515b8ae000
+9851  mmap(0x71515ba0a000, 774144, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x20a000) = 0x71515ba0a000
+9851  mmap(0x71515bac7000, 323584, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2c7000) = 0x71515bac7000
+9851  mmap(0x71515bb16000, 2136, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x71515bb16000
+9851  close(3)                          = 0
+9851  mprotect(0x71515bac7000, 20480, PROT_READ) = 0
+9851  brk(0xf2e6000)                    = 0xf2e6000
+9851  brk(0xf307000)                    = 0xf307000
+9851  brk(0xf328000)                    = 0xf328000
+9851  mmap(NULL, 1048576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x71515db00000
+9851  brk(0xf349000)                    = 0xf349000
+9851  futex(0x71515ec7be08, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+9851  futex(0x71515de09fe0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+9851  access("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/Qt5", F_OK) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/QtGui.abi3.so", {st_mode=S_IFREG|0664, st_size=4396640, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/QtGui.abi3.so", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=4396640, ...}) = 0
+9851  mmap(NULL, 3481744, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515b400000
+9851  mmap(0x71515b4cf000, 1359872, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xcf000) = 0x71515b4cf000
+9851  mmap(0x71515b61b000, 880640, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x21b000) = 0x71515b61b000
+9851  mmap(0x71515b6f2000, 389120, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2f1000) = 0x71515b6f2000
+9851  mmap(0x71515b751000, 4240, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x71515b751000
+9851  close(3)                          = 0
+9851  mprotect(0x71515b6f2000, 98304, PROT_READ) = 0
+9851  brk(0xf36a000)                    = 0xf36a000
+9851  brk(0xf38b000)                    = 0xf38b000
+9851  brk(0xf3ac000)                    = 0xf3ac000
+9851  brk(0xf3cd000)                    = 0xf3cd000
+9851  brk(0xf3ee000)                    = 0xf3ee000
+9851  brk(0xf40f000)                    = 0xf40f000
+9851  brk(0xf430000)                    = 0xf430000
+9851  mmap(NULL, 208896, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x71515f292000
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/__init__.cpython-311-x86_64-linux-gnu.so", 0x7fffcf1e05b0) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/__init__.abi3.so", 0x7fffcf1e05b0) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/__init__.so", 0x7fffcf1e05b0) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/__init__.py", {st_mode=S_IFREG|0664, st_size=0, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/__init__.py", {st_mode=S_IFREG|0664, st_size=0, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=189, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0320)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=189, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\366x7h\0\0\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\1\0\0"..., 190) = 189
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+9851  fstat(3, {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  getdents64(3, 0xf1b29c0 /* 8 entries */, 32768) = 232
+9851  getdents64(3, 0xf1b29c0 /* 0 entries */, 32768) = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/__init__.cpython-311-x86_64-linux-gnu.so", 0x7fffcf1e0a50) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/__init__.abi3.so", 0x7fffcf1e0a50) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/__init__.so", 0x7fffcf1e0a50) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/__init__.py", {st_mode=S_IFREG|0664, st_size=0, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/__init__.py", {st_mode=S_IFREG|0664, st_size=0, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=192, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e07c0)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=192, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\217y7h\0\0\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\1\0\0"..., 193) = 192
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+9851  fstat(3, {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  getdents64(3, 0xf1b29c0 /* 13 entries */, 32768) = 488
+9851  getdents64(3, 0xf1b29c0 /* 0 entries */, 32768) = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new/__init__.cpython-311-x86_64-linux-gnu.so", 0x7fffcf1e0ef0) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new/__init__.abi3.so", 0x7fffcf1e0ef0) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new/__init__.so", 0x7fffcf1e0ef0) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new/__init__.py", {st_mode=S_IFREG|0664, st_size=178, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new/__init__.py", {st_mode=S_IFREG|0664, st_size=178, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=429, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0c60)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=429, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0,\244@h\262\0\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\2\0\0"..., 430) = 429
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+9851  fstat(3, {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  getdents64(3, 0xf1b29c0 /* 17 entries */, 32768) = 616
+9851  getdents64(3, 0xf1b29c0 /* 0 entries */, 32768) = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new/base.py", {st_mode=S_IFREG|0664, st_size=20787, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new/base.py", {st_mode=S_IFREG|0664, st_size=20787, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new/__pycache__/base.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=27880, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0570)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=27880, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\244AIh3Q\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\5\0\0"..., 27881) = 27880
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/QtPrintSupport.abi3.so", {st_mode=S_IFREG|0664, st_size=330984, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/QtPrintSupport.abi3.so", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=330984, ...}) = 0
+9851  mmap(NULL, 246496, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515e624000
+9851  mmap(0x71515e633000, 102400, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xf000) = 0x71515e633000
+9851  mmap(0x71515e64c000, 57344, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x28000) = 0x71515e64c000
+9851  mmap(0x71515e65a000, 28672, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x35000) = 0x71515e65a000
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/site-packages/PyQt5/../../../libQt5PrintSupport.so.5", O_RDONLY|O_CLOEXEC) = 3
+9851  read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+9851  fstat(3, {st_mode=S_IFREG|0775, st_size=400376, ...}) = 0
+9851  mmap(NULL, 402528, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x71515de55000
+9851  mmap(0x71515de7a000, 135168, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x25000) = 0x71515de7a000
+9851  mmap(0x71515de9b000, 94208, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x46000) = 0x71515de9b000
+9851  mmap(0x71515deb2000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x5c000) = 0x71515deb2000
+9851  close(3)                          = 0
+9851  mprotect(0x71515deb2000, 16384, PROT_READ) = 0
+9851  mprotect(0x71515e65a000, 8192, PROT_READ) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils/__init__.cpython-311-x86_64-linux-gnu.so", 0x7fffcf1dfc70) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils/__init__.abi3.so", 0x7fffcf1dfc70) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils/__init__.so", 0x7fffcf1dfc70) = -1 ENOENT (No such file or directory)
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils/__init__.py", {st_mode=S_IFREG|0664, st_size=0, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils/__init__.py", {st_mode=S_IFREG|0664, st_size=0, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=195, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1df9e0)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=195, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\217y7h\0\0\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\1\0\0"..., 196) = 195
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+9851  fstat(3, {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  getdents64(3, 0xf418110 /* 6 entries */, 32768) = 192
+9851  getdents64(3, 0xf418110 /* 0 entries */, 32768) = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils/api_client.py", {st_mode=S_IFREG|0664, st_size=47656, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils/api_client.py", {st_mode=S_IFREG|0664, st_size=47656, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils/__pycache__/api_client.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=67235, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1dfe80)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=67235, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\3THh\372\352\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\4\0\0"..., 67236) = 67235
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils/api_client.py", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=47656, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1dfe80)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=47656, ...}) = 0
+9851  brk(0xf455000)                    = 0xf455000
+9851  read(3, "import requests\nfrom typing impo"..., 47657) = 47656
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  mmap(NULL, 1048576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x71515b300000
+9851  brk(0xf479000)                    = 0xf479000
+9851  brk(0xf49b000)                    = 0xf49b000
+9851  brk(0xf4bc000)                    = 0xf4bc000
+9851  brk(0xf4de000)                    = 0xf4de000
+9851  brk(0xf501000)                    = 0xf501000
+9851  brk(0xf528000)                    = 0xf528000
+9851  brk(0xf549000)                    = 0xf549000
+9851  brk(0xf56a000)                    = 0xf56a000
+9851  brk(0xf58b000)                    = 0xf58b000
+9851  brk(0xf5ac000)                    = 0xf5ac000
+9851  brk(0xf5ce000)                    = 0xf5ce000
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/utils/api_client.py", O_RDONLY) = 3
+9851  ioctl(3, FIOCLEX)                 = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=47656, ...}) = 0
+9851  read(3, "import requests\nfrom typing impo"..., 4096) = 4096
+9851  read(3, "m_cache_or_fetch(\"products\", fet"..., 4096) = 4096
+9851  read(3, "eption(f\"Failed to create produc"..., 4096) = 4096
+9851  read(3, "l}/variants\", \n                 "..., 4096) = 4096
+9851  close(3)                          = 0
+9851  brk(0xf481000)                    = 0xf481000
+9851  write(1, "Critical error during imports: i"..., 72) = 72
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/main.py", {st_mode=S_IFREG|0664, st_size=1502, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/main.py", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=1502, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0a40)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  read(3, "import os\nimport sys\nimport trac"..., 4096) = 1502
+9851  read(3, "", 8192)                 = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new/__init__.py", {st_mode=S_IFREG|0664, st_size=178, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new/__init__.py", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=178, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0a40)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  read(3, "\"\"\"\nMainWindow package for Shiak"..., 4096) = 178
+9851  read(3, "", 8192)                 = 0
+9851  close(3)                          = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new/base.py", {st_mode=S_IFREG|0664, st_size=20787, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app/src/ui/main_window_new/base.py", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=20787, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0a40)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  read(3, "\"\"\"\nBase MainWindow class for Sh"..., 4096) = 4096
+9851  read(3, "f.stats_page)\n            self.c"..., 8192) = 8192
+9851  read(3, ".\"\"\"\n        try:\n            se"..., 8192) = 8192
+9851  read(3, "x::down-button:hover {\n         "..., 8192) = 307
+9851  read(3, "", 8192)                 = 0
+9851  close(3)                          = 0
+9851  write(2, "Traceback (most recent call last"..., 35) = 35
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/Desktop/projects/shiakati_store/backend/desktop_app", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/ast.py", {st_mode=S_IFREG|0664, st_size=61444, ...}) = 0
+9851  stat("/home/ismail/miniconda3/envs/main/lib/python3.11/ast.py", {st_mode=S_IFREG|0664, st_size=61444, ...}) = 0
+9851  openat(AT_FDCWD, "/home/ismail/miniconda3/envs/main/lib/python3.11/__pycache__/ast.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=109915, ...}) = 0
+9851  ioctl(3, TCGETS, 0x7fffcf1e0880)  = -1 ENOTTY (Inappropriate ioctl for device)
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  lseek(3, 0, SEEK_CUR)             = 0
+9851  fstat(3, {st_mode=S_IFREG|0664, st_size=109915, ...}) = 0
+9851  read(3, "\247\r\r\n\0\0\0\0\337\233Ah\4\360\0\0\343\0\0\0\0\0\0\0\0\0\0\0\0\21\0\0"..., 109916) = 109915
+9851  read(3, "", 1)                    = 0
+9851  close(3)                          = 0
+9851  write(2, "  File \"/home/ismail/Desktop/pro"..., 154) = 154
+9851  write(2, "  File \"/home/ismail/Desktop/pro"..., 163) = 163
+9851  write(2, "  File \"/home/ismail/Desktop/pro"..., 173) = 173
+9851  write(2, "  File \"/home/ismail/Desktop/pro"..., 108) = 108
+9851  write(2, "    if response.status_code != 2"..., 194) = 194
+9851  write(2, "                                "..., 58) = 58
+9851  write(2, "SyntaxError: invalid syntax\n", 28) = 28
+9851  rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK, sa_restorer=0x715160245330}, {sa_handler=0x4aac97, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK, sa_restorer=0x715160245330}, 8) = 0
+9851  munmap(0x71515f292000, 208896)    = 0
+9851  munmap(0x7151606d7000, 16384)     = 0
+9851  getpid()                          = 9851
+9851  exit_group(1)                     = ?
+9851  +++ exited with 1 +++

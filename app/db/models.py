@@ -27,6 +27,8 @@ class Product(Base):
     name = Column(Text, nullable=False)
     description = Column(Text, nullable=True)
     category_id = Column(Integer, ForeignKey("categories.id"))
+    image_url = Column(Text, nullable=True)
+    additional_images = Column(Text, nullable=True)  # JSON string to store multiple image URLs
     created_at = Column(TIMESTAMP, server_default=text("CURRENT_TIMESTAMP"))
     
     # Relationships
@@ -131,3 +133,16 @@ class Order(Base):
     # Relationships
     customer = relationship("Customer", back_populates="orders")
     items = relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")
+
+class Expense(Base):
+    __tablename__ = "expenses"
+    id = Column(Integer, primary_key=True)
+    category = Column(String, nullable=False)  # Rent, Electricity, Salary, etc.
+    amount = Column(Numeric(10, 2), nullable=False)
+    description = Column(Text, nullable=True)
+    expense_date = Column(TIMESTAMP, nullable=False)
+    payment_method = Column(String, nullable=True, server_default="Cash")
+    created_at = Column(TIMESTAMP, server_default=text("CURRENT_TIMESTAMP"))
+    
+    def __repr__(self):
+        return f"<Expense(id={self.id}, category='{self.category}', amount={self.amount})>"

@@ -36,9 +36,7 @@ def list_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
         validated_products = []
         for product in products:
             try:
-                if not product.category:
-                    print(f"Warning: Product {product.id} has no category, skipping")
-                    continue
+                if not product.category:                    continue
                     
                 # Add computed fields with proper error handling
                 category_name = product.category.name if product.category else None
@@ -52,7 +50,6 @@ def list_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
                 
                 validated_products.append(product)
             except Exception as e:
-                print(f"Warning: Error processing product {product.id}: {str(e)}")
                 continue
         
         return validated_products
@@ -94,7 +91,6 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
             return db_product
             
         except Exception as e:
-            print(f"Warning: Error computing fields for product {product_id}: {str(e)}")
             # Set default values on error
             setattr(db_product, "category_name", "Uncategorized")
             setattr(db_product, "variants_count", 0)
@@ -102,7 +98,6 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
             return db_product
             
     except Exception as e:
-        print(f"Error retrieving product {product_id}: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error retrieving product: {str(e)}"
@@ -243,9 +238,7 @@ def list_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
         validated_products = []
         for product in products:
             try:
-                if not product.category:
-                    print(f"Warning: Product {product.id} has no category, skipping")
-                    continue
+                if not product.category:                    continue
                     
                 # Add computed fields with proper error handling
                 category_name = product.category.name if product.category else None
@@ -259,7 +252,6 @@ def list_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
                 
                 validated_products.append(product)
             except Exception as e:
-                print(f"Warning: Error processing product {product.id}: {str(e)}")
                 continue
         
         return validated_products
@@ -301,7 +293,6 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
             return db_product
             
         except Exception as e:
-            print(f"Warning: Error computing fields for product {product_id}: {str(e)}")
             # Set default values on error
             setattr(db_product, "category_name", "Uncategorized")
             setattr(db_product, "variants_count", 0)
@@ -309,7 +300,6 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
             return db_product
             
     except Exception as e:
-        print(f"Error retrieving product {product_id}: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error retrieving product: {str(e)}"

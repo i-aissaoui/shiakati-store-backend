@@ -13,12 +13,7 @@ def seed_admin_user(db: Session):
             hashed_password=get_password_hash("admin123")
         )
         db.add(admin)
-        db.commit()
-        print("Admin user created: username=admin, password=admin123")
-    else:
-        print("Admin user already exists")
-
-def seed_categories(db: Session):
+        db.commit()    else:def seed_categories(db: Session):
     """Seed initial categories"""
     categories = [
         {"name": "Vêtements", "description": "Tout type de vêtements"},
@@ -40,9 +35,7 @@ def seed_categories(db: Session):
             db.add(category)
     
     db.commit()
-    print(f"Added {len(categories)} categories")
-        
-def seed_sample_products(db: Session):
+    def seed_sample_products(db: Session):
     """Seed sample products and variants if none exist"""
     try:
         # First ensure we have categories
@@ -52,20 +45,14 @@ def seed_sample_products(db: Session):
         categories = {}
         for name in ["Vêtements", "Chaussures", "Sport"]:
             category = db.query(models.Category).filter(models.Category.name == name).first()
-            if not category:
-                print(f"Warning: Category {name} not found")
-                continue
+            if not category:                continue
             categories[name] = category.id
         
-        if not categories:
-            print("Error: No categories found. Cannot seed products.")
-            return
+        if not categories:            return
             
         # Check if we already have products
         product_count = db.query(models.Product).count()
-        if product_count > 0:
-            print(f"Database already has {product_count} products, skipping seed")
-            return
+        if product_count > 0:            return
             
         # Sample products with category IDs
         products = [
@@ -94,9 +81,7 @@ def seed_sample_products(db: Session):
         # Filter out products with missing category IDs
         products = [p for p in products if p["category_id"] is not None]
         
-        if not products:
-            print("Error: No valid products to seed")
-            return
+        if not products:            return
             
         # Create products
         db_products = []
@@ -107,7 +92,6 @@ def seed_sample_products(db: Session):
                 db.flush()  # Get the product ID
                 db_products.append(product)
             except Exception as e:
-                print(f"Error creating product {product_data['name']}: {str(e)}")
                 continue
         
         # Create variants for each product
@@ -153,21 +137,17 @@ def seed_sample_products(db: Session):
                     variant = models.Variant(**variant_data)
                     db.add(variant)
                 except Exception as e:
-                    print(f"Error creating variant for product {product.name}: {str(e)}")
                     continue
         
         # Commit all changes
         try:
             db.commit()
-            print(f"Added {len(db_products)} products with their variants")
-        except Exception as e:
+            except Exception as e:
             db.rollback()
-            print(f"Error committing changes: {str(e)}")
             raise
             
     except Exception as e:
         db.rollback()
-        print(f"Error in seed_sample_products: {str(e)}")
         raise
 
 def seed_db():
@@ -176,11 +156,7 @@ def seed_db():
     try:
         seed_admin_user(db)
         seed_categories(db)
-        seed_sample_products(db)
-        print("Database seeding complete")
-    except Exception as e:
-        print(f"Error seeding database: {e}")
-    finally:
+        seed_sample_products(db)    except Exception as e:    finally:
         db.close()
 
 if __name__ == "__main__":

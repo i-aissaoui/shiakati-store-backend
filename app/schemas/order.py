@@ -27,8 +27,8 @@ class OrderItemCreate(OrderItemBase):
 class OrderItemOut(OrderItemBase):
     id: int
     product_name: str = "Unknown Product" 
-    size: Optional[str] = None
-    color: Optional[str] = None
+    size: str = "N/A"  # Changed from Optional[str] = None to ensure JSON always has a string
+    color: str = "N/A"  # Changed from Optional[str] = None to ensure JSON always has a string
     
     model_config = {
         "from_attributes": True,
@@ -39,25 +39,36 @@ class OrderItemOut(OrderItemBase):
     
     @classmethod
     def from_orm(cls, item):
-        # Create a copy of the item.__dict__ to avoid modifying the original
-        data = dict(item.__dict__)
+        # Start with a fresh dict instead of copying __dict__
+        data = {
+            'id': item.id,
+            'variant_id': item.variant_id,
+            'quantity': item.quantity,
+            'price': item.price,
+            'product_name': "Unknown Product",
+            'size': "N/A",  # Default to N/A instead of None
+            'color': "N/A"  # Default to N/A instead of None
+        }
         
-        # Remove SQLAlchemy internal attributes
-        if '_sa_instance_state' in data:
-            del data['_sa_instance_state']
+        # Get variant info and product name
+        variant = getattr(item, 'variant', None)
         
-        if hasattr(item, 'variant') and item.variant:
-            if hasattr(item.variant, 'product') and item.variant.product:
-                data['product_name'] = item.variant.product.name
+        if variant is not None:  # Check using 'is not None' to handle falsy values
+            # Get product info
+            product = getattr(variant, 'product', None)
+            if product is not None:
+                data['product_name'] = product.name
+                
+            # Get variant details - checking explicitly for None
+            if hasattr(variant, 'size') and variant.size is not None and variant.size != "" and variant.size.lower() != "none":
+                data['size'] = variant.size
             else:
-                data['product_name'] = "Unknown Product"
-            
-            data['size'] = item.variant.size
-            data['color'] = item.variant.color
-        else:
-            data['product_name'] = "Unknown Product"
-            data['size'] = None
-            data['color'] = None
+                data['size'] = "N/A"
+                
+            if hasattr(variant, 'color') and variant.color is not None and variant.color != "" and variant.color.lower() != "none":
+                data['color'] = variant.color
+            else:
+                data['color'] = "N/A"
         
         return cls(**data)
 
@@ -82,7 +93,16 @@ class OrderCreate(OrderBase):
         return v
 
 class OrderUpdate(BaseModel):
-    status: OrderStatus
+    status: Optional[OrderStatus] = None
+    notes: Optional[str] = None
+    wilaya: Optional[str] = None
+    commune: Optional[str] = None
+    delivery_method: Optional[DeliveryMethod] = None
+
+class OrderItemUpdate(BaseModel):
+    variant_id: Optional[int] = None
+    quantity: Optional[int] = Field(None, ge=1)
+    price: Optional[Decimal] = Field(None, ge=0)
 
 class OrderOut(BaseModel):
     id: int
@@ -108,14 +128,21 @@ class OrderOut(BaseModel):
 
     @classmethod
     def from_orm(cls, order):
-        data = dict(order.__dict__)
+        # Start with a fresh dict instead of copying __dict__
+        data = {
+            'id': order.id,
+            'customer_id': order.customer_id,
+            'wilaya': order.wilaya,
+            'commune': order.commune,
+            'delivery_method': order.delivery_method,
+            'order_time': order.order_time,
+            'status': order.status,
+            'notes': order.notes,
+            'total': order.total
+        }
         
-        # Remove SQLAlchemy internal attributes
-        if '_sa_instance_state' in data:
-            del data['_sa_instance_state']
-        
-        # Handle customer info
-        if hasattr(order, 'customer') and order.customer:
+        # Explicitly handle customer info by accessing the relationship directly
+        if order.customer:  # This forces SQLAlchemy to load the relationship
             data['customer_name'] = order.customer.name
             data['phone_number'] = order.customer.phone_number
         else:
@@ -123,13 +150,19 @@ class OrderOut(BaseModel):
             data['phone_number'] = "No Phone"
             
         # Process items separately to use the OrderItemOut.from_orm method
-        if hasattr(order, 'items') and order.items:
-            data['items'] = [OrderItemOut.from_orm(item) for item in order.items]
+        items = getattr(order, 'items', None)
+        if items is not None:  # Check using 'is not None' to handle empty lists
+            data['items'] = [OrderItemOut.from_orm(item) for item in items]
         else:
             data['items'] = []
         
         # Clean up sample order notes
-        if data.get('notes', '').startswith('Sample order'):
+        notes = data.get('notes')
+        if notes and isinstance(notes, str) and notes.startswith('Sample order'):
             data['notes'] = None
         
-        return cls(**data)
+        # Validate and create the order
+        try:
+            return cls(**data)
+        except Exception as e:
+            raise

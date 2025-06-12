@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api import products, variants, categories, sales, orders, stats, auth
+from app.api import products, variants, categories, sales, orders, stats, auth, expenses
 
 app = FastAPI(title="Shiakati Store Backend")
 
@@ -10,4 +10,5 @@ app.include_router(variants.router, prefix="/variants", tags=["variants"])
 app.include_router(categories.router, prefix="/categories", tags=["categories"])
 app.include_router(sales.router, prefix="/sales", tags=["sales"])
 app.include_router(orders.router, prefix="/orders", tags=["orders"])
-app.include_router(stats.router, prefix="/stats", tags=["stats"]) 
+app.include_router(stats.router, prefix="/stats", tags=["stats"])
+app.include_router(expenses.router, prefix="/expenses", tags=["expenses"])

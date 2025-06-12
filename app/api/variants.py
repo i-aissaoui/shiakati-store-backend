@@ -115,6 +115,19 @@ def delete_variant(variant_id: int, db: Session = Depends(get_db)):
     db_variant = db.query(models.Variant).filter(models.Variant.id == variant_id).first()
     if not db_variant:
         raise HTTPException(status_code=404, detail="Variant not found")
-    db.delete(db_variant)
-    db.commit()
-    return {"ok": True}
+    
+    # Check if variant is referenced in any sale items
+    sale_items = db.query(models.SaleItem).filter(models.SaleItem.variant_id == variant_id).count()
+    if sale_items > 0:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Cannot delete: Variant is used in {sale_items} sales. Delete related sales first."
+        )
+    
+    try:
+        db.delete(db_variant)
+        db.commit()
+        return {"ok": True}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")

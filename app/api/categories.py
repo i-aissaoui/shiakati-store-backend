@@ -18,7 +18,12 @@ def get_db():
 def list_categories(db: Session = Depends(get_db)):
     try:
         categories = db.query(models.Category).all()
-        return categories
+        # Calculate products_count for each category
+        for category in categories:
+            products_count = db.query(models.Product).filter(models.Product.category_id == category.id).count()
+            setattr(category, "products_count", products_count)
+        # Explicitly serialize to dicts to avoid tuple/dict mismatch
+        return [Category.model_validate(category).model_dump() for category in categories]
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -42,6 +47,10 @@ def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
         db.add(db_category)
         db.commit()
         db.refresh(db_category)
+        
+        # Set products_count for new category (will be 0)
+        setattr(db_category, "products_count", 0)
+        
         return db_category
     except HTTPException:
         raise
@@ -61,6 +70,11 @@ def get_category(category_id: int, db: Session = Depends(get_db)):
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"Category with id {category_id} not found"
             )
+        
+        # Calculate products_count for this category
+        products_count = db.query(models.Product).filter(models.Product.category_id == category.id).count()
+        setattr(category, "products_count", products_count)
+        
         return category
     except HTTPException:
         raise
@@ -96,6 +110,11 @@ def update_category(category_id: int, category: CategoryUpdate, db: Session = De
         
         db.commit()
         db.refresh(db_category)
+        
+        # Calculate products_count for updated category
+        products_count = db.query(models.Product).filter(models.Product.category_id == db_category.id).count()
+        setattr(db_category, "products_count", products_count)
+        
         return db_category
     except HTTPException:
         raise
@@ -116,8 +135,8 @@ def delete_category(category_id: int, db: Session = Depends(get_db)):
                 detail=f"Category with id {category_id} not found"
             )
         
-        # Check if category has associated products
-        products = db.query(models.Product).filter(models.Product.category == db_category.name).count()
+        # Check if category has associated products - fix the relationship check
+        products = db.query(models.Product).filter(models.Product.category_id == category_id).count()
         if products > 0:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,

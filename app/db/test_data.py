@@ -8,9 +8,7 @@ def add_test_sales():
     
     # Get some existing products
     products = db.query(Product).limit(5).all()
-    if not products:
-        print("No products found in database")
-        return
+    if not products:        return
         
     # Create sample sales over the past few days
     base_date = datetime.now()
@@ -54,8 +52,5 @@ def add_test_sales():
             )
             db.add(sale_item)
     
-    db.commit()
-    print("Test sales data added successfully")
-
-if __name__ == "__main__":
+    db.commit()if __name__ == "__main__":
     add_test_sales()
