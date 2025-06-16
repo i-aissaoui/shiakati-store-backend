@@ -23,7 +23,7 @@ def get_db():
 @router.get("/summary", response_model=StatsSummary)
 def get_stats_summary(db: Session = Depends(get_db)):
     try:
-        # Calculate stats
+        print("Calculating stats...")
         
         # Calculate total sales items and revenue with explicit joins
         sales_stats = db.query(
@@ -37,6 +37,10 @@ def get_stats_summary(db: Session = Depends(get_db)):
         total_transactions = sales_stats.total_transactions if sales_stats else 0
         total_items = float(sales_stats.total_items or 0)
         total_revenue = float(sales_stats.total_revenue or 0)
+        
+        print(f"Total transactions: {total_transactions}")
+        print(f"Total items sold: {total_items}")
+        print(f"Total revenue: {total_revenue}")
 
         # Get top products with explicit joins
         top_products_query = (
@@ -54,6 +58,8 @@ def get_stats_summary(db: Session = Depends(get_db)):
             .limit(5)
             .all()
         )
+        
+        print(f"Found {len(top_products_query)} top products")
         
         top_products = [
             ProductStats(
@@ -75,9 +81,11 @@ def get_stats_summary(db: Session = Depends(get_db)):
             top_products=top_products
         )
         
+        print(f"Sending response: {response.dict()}")
         return response
         
     except Exception as e:
+        print(f"Error calculating stats: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error calculating stats: {str(e)}"

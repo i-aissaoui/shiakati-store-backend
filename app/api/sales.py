@@ -38,7 +38,8 @@ def _load_sale_with_relationships(db: Session, sale_id: int = None, sale: models
                 )
             sale = query.filter(models.Sale.id == sale.id).first()
             
-        if not hasattr(sale, 'items'):            return sale
+        if not hasattr(sale, 'items'):
+            return sale
             
         # Validate relationships are properly loaded but don't fail if product data is missing
         # Just log a warning instead of raising an exception
@@ -46,9 +47,9 @@ def _load_sale_with_relationships(db: Session, sale_id: int = None, sale: models
             try:
                 variant = getattr(item, 'variant', None)
                 if variant and not getattr(variant, 'product', None):
-                    pass  # Missing product reference
+                    print(f"Warning: Variant {variant.id} has no associated product")
             except Exception as e:
-                pass  # Handle exception silently
+                print(f"Warning: Error processing sale item: {str(e)}")
         return sale
     except HTTPException:
         raise
@@ -203,11 +204,67 @@ def create_sale(sale: SaleCreate, db: Session = Depends(get_db)):
 @router.get("/{sale_id}", response_model=SaleOut)
 def get_sale(sale_id: int, db: Session = Depends(get_db)):
     try:
-        return _load_sale_with_relationships(db, sale_id=sale_id)
+        sale = _load_sale_with_relationships(db, sale_id=sale_id)
+        
+        # Manually construct the response to ensure product names are included
+        sale_dict = {
+            "id": sale.id,
+            "sale_time": sale.sale_time,
+            "total": sale.total,
+            "items": []
+        }
+        
+        for item in sale.items:
+            item_dict = {
+                "id": item.id,
+                "variant_id": item.variant_id,
+                "quantity": item.quantity,
+                "price": item.price,
+                "product_name": "Unknown Product",
+                "size": None,
+                "color": None
+            }
+            
+            # Get product name and variant info from relationships
+            if item.variant:
+                item_dict["size"] = item.variant.size
+                item_dict["color"] = item.variant.color
+                
+                if item.variant.product:
+                    item_dict["product_name"] = item.variant.product.name
+                    print(f"Sale item {item.id}: Found product name = {item.variant.product.name}")
+                else:
+                    print(f"Sale item {item.id}: Variant has no product")
+            else:
+                print(f"Sale item {item.id}: No variant found")
+                
+            sale_dict["items"].append(item_dict)
+        
+        return sale_dict
+        
     except HTTPException:
         raise
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error retrieving sale: {str(e)}"
+        )
+
+@router.delete("/clear-all", status_code=status.HTTP_200_OK)
+def clear_all_sales(db: Session = Depends(get_db)):
+    """Clear all sales from the database."""
+    try:
+        # Delete all sale items first to avoid foreign key constraints
+        db.query(models.SaleItem).delete()
+        
+        # Then delete all sales
+        num_deleted = db.query(models.Sale).delete()
+        
+        db.commit()
+        return {"message": f"Successfully cleared {num_deleted} sales from database"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error clearing sales: {str(e)}"
         )

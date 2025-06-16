@@ -211,10 +211,32 @@ class StatsPageMixin:
         right_layout = QVBoxLayout(right_panel)
         right_layout.setContentsMargins(0, 0, 0, 0)
         
-        # Sales History Title
+        # Sales History Title and Clear History Button
         history_title = QLabel("Sales History")
         history_title.setStyleSheet("font-size: 18px; font-weight: bold; padding: 10px;")
-        right_layout.addWidget(history_title)
+        
+        # Add a header with the title and clear history button
+        header_layout = QHBoxLayout()
+        header_layout.addWidget(history_title)
+        
+        # Add Clear History button
+        self.clear_history_btn = QPushButton("Clear History")
+        self.clear_history_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #e74c3c;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-weight: bold;
+                font-size: 12px;
+            }
+            QPushButton:hover {
+                background-color: #c0392b;
+            }
+        """)
+        self.clear_history_btn.clicked.connect(self.confirm_clear_sales_history)
+        header_layout.addWidget(self.clear_history_btn)
+        right_layout.addLayout(header_layout)
         
         # Sales History Table
         self.sales_history_table = QTableWidget()
@@ -510,6 +532,34 @@ class StatsPageMixin:
         except Exception as e:
             QMessageBox.warning(self, "Error", f"Failed to load sale details: {str(e)}")
             # Debug logging
+
+    def confirm_clear_sales_history(self):
+        """Display confirmation dialog before clearing sales history."""
+        confirm_dialog = QMessageBox()
+        confirm_dialog.setIcon(QMessageBox.Warning)
+        confirm_dialog.setWindowTitle("Clear Sales History")
+        confirm_dialog.setText("Are you sure you want to clear all sales history?")
+        confirm_dialog.setInformativeText("This action cannot be undone. All sales records will be permanently deleted from the database.")
+        confirm_dialog.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        confirm_dialog.setDefaultButton(QMessageBox.No)
+        
+        if confirm_dialog.exec_() == QMessageBox.Yes:
+            self.clear_sales_history()
+    
+    def clear_sales_history(self):
+        """Clear all sales history from the database."""
+        try:
+            success = self.api_client.clear_sales_history()
+            
+            if success:
+                QMessageBox.information(self, "Success", "Sales history has been cleared successfully.")
+                # Refresh the stats display
+                self.update_stats()
+            else:
+                QMessageBox.warning(self, "Error", "Failed to clear sales history. Please try again or contact support.")
+                
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
 
     def cleanup_stats_widgets(self):
         """Safely clean up stats page widgets."""

@@ -1,0 +1,74 @@
+    def find_variant_by_barcode(self, barcode: str) -> Dict[str, Any]:
+        """Find a variant by barcode using multiple strategies for reliability.
+        
+        Args:
+            barcode: The barcode to search for
+            
+        Returns:
+            A dictionary with variant details or None if not found
+        """
+        print(f"Searching for variant with barcode: {barcode}")
+        
+        # Strategy 1: Check in inventory cache first (fastest method)
+        try:
+            inventory = self.get_inventory()
+            for item in inventory:
+                if item.get("barcode") == barcode:
+                    if item.get("variant_id"):
+                        print(f"Found variant_id in inventory: {item['variant_id']}")
+                        return {"id": item["variant_id"], "barcode": barcode}
+                    elif item.get("id"):  # Some versions store id directly
+                        print(f"Found id in inventory: {item['id']}")
+                        return {"id": item["id"], "barcode": barcode}
+        except Exception as e:
+            print(f"Error searching in inventory: {str(e)}")
+        
+        # Strategy 2: Direct API call to variants/barcode endpoint
+        try:
+            response = self.session.get(
+                f"{self.base_url}/variants/barcode/{barcode}",
+                headers=self.get_headers(),
+                timeout=10
+            )
+            if response.status_code == 200:
+                variant = response.json()
+                print(f"Found variant via API: {variant.get('id')}")
+                return variant
+            else:
+                print(f"Variant API returned status: {response.status_code}")
+        except Exception as e:
+            print(f"Error calling variants/barcode API: {str(e)}")
+        
+        # Strategy 3: Get all variants and search manually
+        try:
+            response = self.session.get(
+                f"{self.base_url}/variants",
+                headers=self.get_headers(),
+                timeout=10
+            )
+            if response.status_code == 200:
+                variants = response.json()
+                for variant in variants:
+                    if variant.get("barcode") == barcode:
+                        print(f"Found variant in all variants list: {variant.get('id')}")
+                        return variant
+        except Exception as e:
+            print(f"Error searching all variants: {str(e)}")
+            
+        # Strategy 4: Try a fuzzy search if available
+        try:
+            response = self.session.get(
+                f"{self.base_url}/variants/search/?barcode={barcode}",
+                headers=self.get_headers(),
+                timeout=10
+            )
+            if response.status_code == 200:
+                results = response.json()
+                if results and len(results) > 0:
+                    print(f"Found variant with search API: {results[0].get('id')}")
+                    return results[0]
+        except Exception as e:
+            print(f"Error using search API: {str(e)}")
+            
+        print(f"Could not find variant with barcode: {barcode}")
+        return None

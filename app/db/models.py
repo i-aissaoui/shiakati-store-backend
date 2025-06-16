@@ -27,9 +27,9 @@ class Product(Base):
     name = Column(Text, nullable=False)
     description = Column(Text, nullable=True)
     category_id = Column(Integer, ForeignKey("categories.id"))
-    image_url = Column(Text, nullable=True)
-    additional_images = Column(Text, nullable=True)  # JSON string to store multiple image URLs
     created_at = Column(TIMESTAMP, server_default=text("CURRENT_TIMESTAMP"))
+    show_on_website = Column(Integer, server_default=text("0"), nullable=False)  # 0=hidden, 1=visible
+    image_url = Column(Text, nullable=True)  # Main product image
     
     # Relationships
     category = relationship("Category", back_populates="products")
@@ -43,6 +43,7 @@ class Variant(Base):
     color = Column(Text, nullable=True)
     barcode = Column(Text, unique=True, nullable=False)
     price = Column(Numeric(10, 2))
+    cost_price = Column(Numeric(10, 2), server_default=text("0"))  # Added cost price field
     quantity = Column(Numeric(10, 3), server_default=text("0"))  # Allow decimal quantities
     created_at = Column(TIMESTAMP, server_default=text("CURRENT_TIMESTAMP"))
     

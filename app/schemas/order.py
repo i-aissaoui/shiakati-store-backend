@@ -165,4 +165,6 @@ class OrderOut(BaseModel):
         try:
             return cls(**data)
         except Exception as e:
+            print(f"Error creating OrderOut for order {data.get('id')}: {str(e)}")
+            print(f"Data: {data}")
             raise

@@ -22,7 +22,7 @@ DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://shiakati:shiakati@localho
 engine = create_engine(DATABASE_URL)
 
 # Define the new password
-new_password = "123"
+new_password = "password123"
 
 # Hash the password
 hashed_password = pwd_context.hash(new_password)

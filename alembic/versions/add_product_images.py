@@ -1,24 +1,24 @@
-"""Add image fields to products
+"""add product images
 
-Revision ID: add_product_images
-Depends on: fefbebdaaffb
+Revision ID: add_product_images_rev
+Revises: add_website_visibility_column
+Create Date: 2025-06-15 10:00:00.000000
 
 """
 from alembic import op
 import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
-revision = 'add_product_images'
-down_revision = 'fefbebdaaffb'
+revision = 'add_product_images_rev'
+down_revision = 'add_website_visibility_column'
 branch_labels = None
 depends_on = None
 
 
 def upgrade():
-    op.add_column('products', sa.Column('image_url', sa.Text(), nullable=True))
-    op.add_column('products', sa.Column('additional_images', sa.Text(), nullable=True))
+    # This is a placeholder migration to maintain the dependency chain
+    pass
 
 
 def downgrade():
-    op.drop_column('products', 'additional_images')
-    op.drop_column('products', 'image_url')
+    pass

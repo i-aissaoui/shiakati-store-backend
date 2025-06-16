@@ -14,6 +14,7 @@ def get_db():
     finally:
         db.close()
 
+@router.get("", response_model=List[VariantOut])
 @router.get("/", response_model=List[VariantOut])
 def list_variants(db: Session = Depends(get_db)):
     return db.query(models.Variant).all()
@@ -25,13 +26,24 @@ def get_variant(variant_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Variant not found")
     return variant
 
-@router.get("/barcode/{barcode}", response_model=VariantOut) 
+@router.get("/barcode/{barcode}", response_model=VariantOut)
+@router.get("/barcode/{barcode}/", response_model=VariantOut)
 def get_variant_by_barcode(barcode: str, db: Session = Depends(get_db)):
-    variant = db.query(models.Variant).filter(models.Variant.barcode == barcode).first()
+    variant = db.query(models.Variant).options(
+        joinedload(models.Variant.product)
+    ).filter(models.Variant.barcode == barcode).first()
     if not variant:
         raise HTTPException(status_code=404, detail="Variant not found")
+    
+    # Add product name to the response
+    if variant.product:
+        setattr(variant, "product_name", variant.product.name)
+    else:
+        setattr(variant, "product_name", "Unknown Product")
+    
     return variant
 
+@router.post("", response_model=VariantOut)
 @router.post("/", response_model=VariantOut)
 def create_variant(variant: VariantCreate, db: Session = Depends(get_db)):
     try:
@@ -131,3 +143,58 @@ def delete_variant(variant_id: int, db: Session = Depends(get_db)):
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+
+@router.get("/search/", response_model=List[VariantOut])
+@router.get("/search", response_model=List[VariantOut])
+def search_variants(barcode: str = None, name: str = None, product_id: int = None, db: Session = Depends(get_db)):
+    """Search for variants by barcode, name, or product id."""
+    query = db.query(models.Variant)
+    
+    if barcode:
+        # Check if this is an SKU barcode format
+        if barcode.startswith("SKU"):
+            try:
+                # Extract the numeric part after 'SKU'
+                sku_product_id = int(barcode[3:])
+                print(f"Extracted product_id {sku_product_id} from SKU barcode: {barcode}")
+                
+                # Add a filter for product_id
+                query = query.filter(models.Variant.product_id == sku_product_id)
+            except ValueError:
+                # If we can't extract a number, just use the regular LIKE search
+                print(f"Could not extract product_id from SKU barcode: {barcode}")
+                query = query.filter(models.Variant.barcode.ilike(f"%{barcode}%"))
+        else:
+            # Regular barcode search with LIKE
+            query = query.filter(models.Variant.barcode.ilike(f"%{barcode}%"))
+    
+    if product_id:
+        query = query.filter(models.Variant.product_id == product_id)
+        
+    if name:
+        # Join with Product to search by product name
+        query = query.join(models.Product).filter(models.Product.name.ilike(f"%{name}%"))
+    
+    if not barcode and not name and not product_id:
+        raise HTTPException(status_code=400, detail="At least one search parameter (barcode, name, or product_id) is required")
+    
+    # Limit results to prevent overloading    
+    results = query.limit(100).all()
+    
+    # If no results found with LIKE search and barcode is provided, try exact match as fallback
+    if not results and barcode:
+        exact_match = db.query(models.Variant).filter(models.Variant.barcode == barcode).first()
+        if exact_match:
+            return [exact_match]
+            
+    return results
+
+@router.get("/product/{product_id}", response_model=List[VariantOut])
+@router.get("/product/{product_id}/", response_model=List[VariantOut])
+def get_variants_by_product_id(product_id: int, db: Session = Depends(get_db)):
+    """Get all variants for a specific product ID."""
+    variants = db.query(models.Variant).filter(models.Variant.product_id == product_id).all()
+    if not variants:
+        # Return empty list rather than 404 to simplify client handling
+        return []
+    return variants

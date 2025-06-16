@@ -1,16 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, Depends, HTTPException, status, File, UploadFile, Form
+from sqlalchemy.orm import Session, joinedload
 from app.db.session import SessionLocal
 from app.db import models
 from app.schemas.product import ProductCreate, ProductOut, ProductUpdate, ProductDetailOut
-from typing import List
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from app.db.session import SessionLocal
-from app.db import models
-from app.schemas.product import ProductCreate, ProductOut, ProductUpdate, ProductDetailOut
-from typing import List
-from sqlalchemy.orm import joinedload
+from typing import List, Optional
+import shutil
+import os
+from pathlib import Path
+import uuid
 
 router = APIRouter()
 
@@ -36,10 +33,10 @@ def list_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
         validated_products = []
         for product in products:
             try:
-                if not product.category:                    continue
+                # # if not product.category: continue # Commented out to show all products # Commented out to show all products
                     
                 # Add computed fields with proper error handling
-                category_name = product.category.name if product.category else None
+                category_name = product.category.name if product.category else "Uncategorized"
                 variants = product.variants or []
                 variants_count = len(variants)
                 total_stock = sum(float(v.quantity or 0) for v in variants)
@@ -238,10 +235,10 @@ def list_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
         validated_products = []
         for product in products:
             try:
-                if not product.category:                    continue
+                # # if not product.category: continue # Commented out to show all products # Commented out to show all products
                     
                 # Add computed fields with proper error handling
-                category_name = product.category.name if product.category else None
+                category_name = product.category.name if product.category else "Uncategorized"
                 variants = product.variants or []
                 variants_count = len(variants)
                 total_stock = sum(float(v.quantity or 0) for v in variants)
@@ -327,3 +324,211 @@ def delete_product(product_id: int, db: Session = Depends(get_db)):
     db.delete(db_product)
     db.commit()
     return db_product
+
+# Create an endpoint to handle file uploads for product images
+@router.post("/upload-image/{barcode}")
+async def upload_product_image(barcode: str, file: UploadFile = File(...), db: Session = Depends(get_db)):
+    """Upload an image for a product variant with the specified barcode.
+    The image will be stored in a directory named after the barcode.
+    """
+    try:
+        # Find the variant with this barcode
+        variant = db.query(models.Variant).filter(models.Variant.barcode == barcode).first()
+        if not variant:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, 
+                detail=f"Variant with barcode {barcode} not found"
+            )
+        
+        # Get the product for this variant
+        product_id = variant.product_id
+        product = db.query(models.Product).filter(models.Product.id == product_id).first()
+        if not product:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, 
+                detail=f"Product not found for variant with barcode {barcode}"
+            )
+            
+        # Create directory for this product's images
+        product_dir = f"static/images/products/{barcode}"
+        os.makedirs(product_dir, exist_ok=True)
+        
+        # Check how many images already exist for this product
+        existing_files = os.listdir(product_dir) if os.path.exists(product_dir) else []
+        image_number = len(existing_files) + 1
+        
+        # Generate a unique filename for the image
+        file_extension = os.path.splitext(file.filename)[1]
+        unique_filename = f"product_{image_number}{file_extension}"
+        file_path = os.path.join(product_dir, unique_filename)
+        
+        # Save the file
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+            
+        # Update the product image URL
+        # If it's the first image, update the main image_url
+        # Ensure consistent forward slashes for URL paths
+        image_url = f"/{product_dir}/{unique_filename}".replace('\\', '/')
+        
+        print(f"[API DEBUG] Created image URL: {image_url}")
+        
+        if image_number == 1:
+            product.image_url = image_url
+        
+        db.commit()
+        
+        return {"filename": unique_filename, "image_url": image_url}
+    except HTTPException:
+        raise
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error uploading image: {str(e)}"
+        )
+
+# Also add a utility endpoint to generate a unique barcode
+@router.get("/generate-barcode")
+async def generate_unique_barcode(db: Session = Depends(get_db)):
+    """Generate a unique barcode that doesn't exist in the database."""
+    try:
+        while True:
+            # Generate a random barcode with "SKU" prefix
+            new_barcode = f"SKU{uuid.uuid4().hex[:8].upper()}"
+            
+            # Check if it exists in the database
+            exists = db.query(models.Variant).filter(models.Variant.barcode == new_barcode).first()
+            if not exists:
+                return {"barcode": new_barcode}
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error generating barcode: {str(e)}"
+        )
+
+@router.get("/product-images/{barcode}")
+async def get_product_images(barcode: str, db: Session = Depends(get_db)):
+    """Get all images for a product with the specified barcode."""
+    try:
+        # Find the variant with this barcode
+        variant = db.query(models.Variant).filter(models.Variant.barcode == barcode).first()
+        if not variant:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, 
+                detail=f"Variant with barcode {barcode} not found"
+            )
+        
+        # Get the product for this variant
+        product_id = variant.product_id
+        product = db.query(models.Product).filter(models.Product.id == product_id).first()
+        if not product:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, 
+                detail=f"Product not found for variant with barcode {barcode}"
+            )
+            
+        # Check the product's image directory
+        product_dir = f"static/images/products/{barcode}"
+        if not os.path.exists(product_dir):
+            print(f"[API DEBUG] Image directory not found for barcode {barcode}: {product_dir}")
+            return {"images": []}
+            
+        # Get all image files in this directory
+        image_files = [f for f in os.listdir(product_dir) 
+                      if os.path.isfile(os.path.join(product_dir, f)) and 
+                      f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
+        
+        print(f"[API DEBUG] Found {len(image_files)} images for barcode {barcode} in {product_dir}")
+        print(f"[API DEBUG] Image files: {image_files}")
+        
+        # Create URLs for all images with proper forward slashes
+        # Replace os.path.join with explicit path construction using forward slashes
+        image_urls = [f"/{product_dir}/{img}".replace('\\', '/') for img in image_files]
+        
+        print(f"[API DEBUG] Returning {len(image_urls)} image URLs")
+        # Add debugging to see actual URLs being returned
+        if image_urls:
+            print(f"[API DEBUG] Sample URL: {image_urls[0]}")
+        return {"images": image_urls, "main_image": product.image_url}
+    except HTTPException:
+        raise
+    except Exception as e:
+        import traceback
+        error_trace = traceback.format_exc()
+        print(f"[API ERROR] Error getting product images: {str(e)}")
+        print(f"[API ERROR] Traceback: {error_trace}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error getting product images: {str(e)}"
+        )
+
+@router.delete("/product-image/{barcode}/{filename}")
+async def delete_product_image(barcode: str, filename: str, db: Session = Depends(get_db)):
+    """Delete a specific image for a product with the specified barcode."""
+    try:
+        # Find the variant with this barcode
+        variant = db.query(models.Variant).filter(models.Variant.barcode == barcode).first()
+        if not variant:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, 
+                detail=f"Variant with barcode {barcode} not found"
+            )
+        
+        # Get the product for this variant
+        product_id = variant.product_id
+        product = db.query(models.Product).filter(models.Product.id == product_id).first()
+        if not product:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, 
+                detail=f"Product not found for variant with barcode {barcode}"
+            )
+            
+        # Check the product's image directory
+        product_dir = f"static/images/products/{barcode}"
+        if not os.path.exists(product_dir):
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"No image directory found for product with barcode {barcode}"
+            )
+            
+        # Create full file path
+        file_path = os.path.join(product_dir, filename)
+        
+        # Ensure the file exists and is within the product directory
+        if not os.path.exists(file_path) or not os.path.isfile(file_path):
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Image file not found"
+            )
+            
+        # Check if it's the main image
+        image_url = f"/{file_path}"
+        if product.image_url == image_url:
+            # If deleting the main image, check if there are other images to set as main
+            other_images = [f for f in os.listdir(product_dir) 
+                           if os.path.isfile(os.path.join(product_dir, f)) 
+                           and f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))
+                           and f != filename]
+            
+            if other_images:
+                # Set first alternative as the main image
+                product.image_url = f"/{os.path.join(product_dir, other_images[0])}"
+            else:
+                # No other images, clear the image URL
+                product.image_url = None
+                
+            db.commit()
+        
+        # Delete the file
+        os.remove(file_path)
+        
+        return {"message": "Image deleted successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error deleting product image: {str(e)}"
+        )

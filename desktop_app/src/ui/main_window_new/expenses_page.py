@@ -197,7 +197,34 @@ class ExpensesPageMixin:
     def load_expenses(self):
         """Load expenses data into the table."""
         try:
-            expenses = self.api_client.get_expenses()
+            print("\n\n=========== DEBUG: EXPENSES PAGE ===========")
+            print("DEBUG: About to call api_client.get_expenses_safely()")
+            
+            # Check if the method exists before calling
+            if not hasattr(self.api_client, 'get_expenses_safely'):
+                print("DEBUG: ERROR - get_expenses_safely method doesn't exist in api_client!")
+                print(f"DEBUG: Available methods: {[m for m in dir(self.api_client) if not m.startswith('_') and callable(getattr(self.api_client, m))]}")
+                
+                # Try alternative method names
+                if hasattr(self.api_client, 'get_expenses_safe'):
+                    print("DEBUG: Found alternative method 'get_expenses_safe', using it instead")
+                    expenses = self.api_client.get_expenses_safe()
+                elif hasattr(self.api_client, 'get_expenses'):
+                    print("DEBUG: Falling back to 'get_expenses' method")
+                    expenses = self.api_client.get_expenses()
+                else:
+                    print("DEBUG: No expenses method found, using empty list")
+                    expenses = []
+            else:
+                # Use the safe method to prevent infinite recursion
+                expenses = self.api_client.get_expenses_safely()
+            
+            print(f"DEBUG: Received expenses data type: {type(expenses)}")
+            print(f"DEBUG: Received expenses count: {len(expenses) if expenses else 0}")
+            if expenses and len(expenses) > 0:
+                print(f"DEBUG: First expense item keys: {list(expenses[0].keys())}")
+                print(f"DEBUG: First expense item sample: {expenses[0]}")
+                
             self.expenses_table.setRowCount(0)
             
             if not expenses:
@@ -206,6 +233,7 @@ class ExpensesPageMixin:
                 
             total_amount = 0.0
             for expense in expenses:
+                print(f"DEBUG: Processing expense: {expense}")
                 row = self.expenses_table.rowCount()
                 self.expenses_table.insertRow(row)
                 

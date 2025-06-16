@@ -61,13 +61,18 @@ class MainWindow(QMainWindow):
         from .categories_page import CategoriesPageMixin
         from .stats_page import StatsPageMixin
         from .expenses_page import ExpensesPageMixin
+        from .images_page import ImagesPageMixin
         
         # Apply mixins to add page-specific functionality
         self.__class__ = type('MainWindow', (
             MainWindow, POSPageMixin, InventoryPageMixin, OrdersPageMixin,
-            CategoriesPageMixin, StatsPageMixin, ExpensesPageMixin
+            CategoriesPageMixin, StatsPageMixin, ExpensesPageMixin, ImagesPageMixin
         ), {})
         
+        # Set default authentication
+        self._ensure_authenticated()
+        
+        # Initialize UI
         self.initUI()
 
     def initUI(self):
@@ -100,6 +105,7 @@ class MainWindow(QMainWindow):
             self.orders_page = QWidget()
             self.categories_page = QWidget()
             self.expenses_page = QWidget()
+            self.images_page = QWidget()
 
             # Set up pages
             self.setup_pos_page()
@@ -108,6 +114,7 @@ class MainWindow(QMainWindow):
             self.setup_orders_page()
             self.setup_categories_page()
             self.setup_expenses_page()
+            self.setup_images_page()
 
             # Add pages to stack
             self.content_stack.addWidget(self.pos_page)
@@ -116,6 +123,7 @@ class MainWindow(QMainWindow):
             self.content_stack.addWidget(self.orders_page)
             self.content_stack.addWidget(self.categories_page)
             self.content_stack.addWidget(self.expenses_page)
+            self.content_stack.addWidget(self.images_page)
             
             # Set up periodic stats refresh
             self.stats_timer = QTimer()
@@ -416,6 +424,10 @@ class MainWindow(QMainWindow):
         expenses_btn.setCheckable(True)
         expenses_btn.clicked.connect(lambda: self.switch_page("expenses"))
         
+        images_btn = QPushButton("🖼️ Images & Posts")
+        images_btn.setCheckable(True)
+        images_btn.clicked.connect(lambda: self.switch_page("images"))
+        
         # Add buttons to layout
         sidebar_layout.addWidget(pos_btn)
         sidebar_layout.addWidget(inventory_btn)
@@ -423,6 +435,7 @@ class MainWindow(QMainWindow):
         sidebar_layout.addWidget(categories_btn)
         sidebar_layout.addWidget(stats_btn)
         sidebar_layout.addWidget(expenses_btn)
+        sidebar_layout.addWidget(images_btn)
         sidebar_layout.addStretch()
         
         # Create button group for exclusive checking
@@ -433,6 +446,7 @@ class MainWindow(QMainWindow):
         self.nav_group.addButton(categories_btn)
         self.nav_group.addButton(stats_btn)
         self.nav_group.addButton(expenses_btn)
+        self.nav_group.addButton(images_btn)
         
         # Hide sidebar initially (shown after login)
         self.sidebar.hide()
@@ -446,7 +460,8 @@ class MainWindow(QMainWindow):
             "stats": 2,
             "orders": 3,
             "categories": 4,
-            "expenses": 5
+            "expenses": 5,
+            "images": 6
         }.get(page_name, 0)
         
         # If switching to stats page, update the stats
@@ -558,3 +573,12 @@ class MainWindow(QMainWindow):
                 background-color: #dee2e6;
             }
         """)
+
+    def _ensure_authenticated(self):
+        """Ensure the API client has authentication."""
+        try:
+            # Set default credentials
+            self.api_client.login("admin", "123")
+            print("Auto-login performed")
+        except Exception as e:
+            print(f"Auto-login failed: {str(e)}")

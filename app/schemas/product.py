@@ -21,22 +21,22 @@ class ProductBase(BaseModel):
         ...,
         description="ID of the category this product belongs to"
     )
-    image_url: Optional[str] = Field(
-        None,
-        description="URL to the main product image"
-    )
-    additional_images: Optional[str] = Field(
-        None,
-        description="JSON string with additional product image URLs"
+    show_on_website: Optional[int] = Field(
+        0,
+        description="Whether to show this product on the website (0=hidden, 1=visible)"
     )
 
 class ProductCreate(ProductBase):
     pass
 
 class ProductUpdate(BaseModel):
-    name: Optional[str] = Field(None, min_length=1, max_length=100)
-    description: Optional[str] = None
-    category_id: Optional[int] = None
+    name: Optional[str] = Field(default=None, min_length=1, max_length=100)
+    description: Optional[str] = Field(default=None)
+    category_id: Optional[int] = Field(default=None)
+    image_url: Optional[str] = Field(default=None)
+    show_on_website: Optional[int] = Field(default=None, description="Website visibility (0=hidden, 1=visible)")
+    
+    model_config = ConfigDict(extra='forbid')
 
 class ProductOut(BaseModel):
     id: int
@@ -44,11 +44,11 @@ class ProductOut(BaseModel):
     description: Optional[str]
     category_id: Optional[int] = None
     category_name: str = "Uncategorized"
-    image_url: Optional[str] = None
-    additional_images: Optional[str] = None
     created_at: datetime
     variants_count: int = 0
     total_stock: float = 0
+    show_on_website: Optional[int] = 0
+    image_url: Optional[str] = None
     
     model_config = ConfigDict(from_attributes=True)
 

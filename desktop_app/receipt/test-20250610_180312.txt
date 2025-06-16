@@ -1,3 +1,0 @@
-This is a test file created at 2025-06-10 18:03:12.069080
-Python version: 3.11.13 (main, Jun  5 2025, 13:12:00) [GCC 11.2.0]
-Current working directory: /home/ismail/Desktop/projects/shiakati_store/backend

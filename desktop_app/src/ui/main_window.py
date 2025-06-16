@@ -606,10 +606,6 @@ class MainWindow(QMainWindow):
         
         search_layout.addStretch()
         
-        add_product_btn = QPushButton("➕ Add Product")
-        add_product_btn.clicked.connect(self.show_add_product_dialog)
-        search_layout.addWidget(add_product_btn)
-        
         layout.addLayout(search_layout)
         
         # Product table
@@ -643,35 +639,6 @@ class MainWindow(QMainWindow):
         self.inventory_table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
         
         layout.addWidget(self.inventory_table)
-        
-        # Add product section
-        form_layout = QHBoxLayout()
-        self.product_name_input = QLineEdit()
-        self.product_name_input.setPlaceholderText("Product Name")
-        self.product_barcode_input = QLineEdit()
-        self.product_barcode_input.setPlaceholderText("Barcode")
-        self.product_category_combo = QComboBox()
-        self.product_price_input = QDoubleSpinBox()
-        self.product_price_input.setMaximum(9999.99)
-        # Apply consistent styling using our helper method
-        self.apply_spinbox_styling(self.product_price_input)
-        self.product_stock_input = QDoubleSpinBox()  # Changed from QSpinBox to QDoubleSpinBox
-        self.product_stock_input.setMaximum(9999.99)
-        # Apply consistent styling using our helper method
-        self.apply_spinbox_styling(self.product_stock_input)
-        
-        form_layout.addWidget(self.product_name_input)
-        form_layout.addWidget(self.product_barcode_input)
-        form_layout.addWidget(self.product_category_combo)
-        form_layout.addWidget(self.product_price_input)
-        form_layout.addWidget(self.product_stock_input)
-        
-        add_button = QPushButton("Add Product")
-        add_button.clicked.connect(self.handle_add_product)
-        form_layout.addWidget(add_button)
-        
-        layout.addWidget(self.inventory_table)
-        layout.addLayout(form_layout)
 
     def parse_price(self, price_str: str) -> float:
         """Parse price string into float, handling different formats."""
@@ -1235,9 +1202,15 @@ class MainWindow(QMainWindow):
 
             # Add date and sale number - centered in header section
             date_str = QDateTime.fromString(sale_data['sale_time'], Qt.ISODate).toString('yyyy-MM-dd HH:mm')
+            
+            # Clean up sale ID display - remove any prefix and show just the number
+            display_sale_id = str(sale_data['id'])
+            if '-' in display_sale_id:
+                display_sale_id = display_sale_id.split('-')[-1]
+            
             html += '<div class="header">'
             html += f"Date: {date_str}\n"
-            html += f"Sale : {sale_data['id']}\n\n"  # Added extra newline
+            html += f"Sale : {display_sale_id}\n\n"  # Use cleaned sale ID
             html += '</div>'
 
             # Start items section
@@ -1254,7 +1227,49 @@ class MainWindow(QMainWindow):
             total_items = 0
             total_amount = 0
             for item in sale_data["items"]:
-                product_name = item.get("product_name", "Unknown Product")
+                # Try multiple approaches to get the product name
+                product_name = None
+                
+                # First try: Use product_name from the item if available
+                if item.get("product_name") and item.get("product_name") != "Unknown Product":
+                    product_name = item.get("product_name")
+                
+                # Second try: Use name field from the item
+                if not product_name and item.get("name") and item.get("name") != "Unknown Product":
+                    product_name = item.get("name")
+                
+                # Third try: Look up the product name from the current inventory using barcode
+                if not product_name:
+                    barcode = item.get("barcode", "")
+                    if barcode:
+                        try:
+                            for row in range(self.product_list.rowCount()):
+                                if self.product_list.item(row, 1) and self.product_list.item(row, 1).text().strip() == barcode.strip():
+                                    product_name = self.product_list.item(row, 0).text()
+                                    break
+                        except Exception as e:
+                            print(f"Error looking up product name: {e}")
+                
+                # Fourth try: Create a descriptive name from available data
+                if not product_name:
+                    barcode = item.get("barcode", "")
+                    size = item.get("size", "")
+                    color = item.get("color", "")
+                    
+                    if barcode:
+                        # Try to create a meaningful name
+                        if size or color:
+                            parts = []
+                            if color:
+                                parts.append(color)
+                            if size:
+                                parts.append(size)
+                            product_name = f"Item {' '.join(parts)} ({barcode[-6:] if len(barcode) > 6 else barcode})"
+                        else:
+                            product_name = f"Item {barcode[-6:] if len(barcode) > 6 else barcode}"
+                    else:
+                        product_name = "Unknown Product"
+                
                 quantity = float(item.get("quantity", 1))
                 price = float(item.get("price", 0))
                 total = price * quantity

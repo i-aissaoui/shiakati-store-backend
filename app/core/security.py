@@ -23,4 +23,5 @@ def decode_access_token(token: str):
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except JWTError:
-        return None 
+        # Return empty dict instead of None to avoid NoneType access errors
+        return {} 

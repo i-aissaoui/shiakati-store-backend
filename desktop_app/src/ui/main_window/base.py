@@ -4,12 +4,11 @@ Contains core functionality and UI initialization.
 """
 
 from PyQt5.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
+    QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
     QPushButton, QLabel, QLineEdit, QMessageBox, QStackedWidget,
-    QButtonGroup, QSizePolicy
+    QButtonGroup
 )
-from PyQt5.QtCore import Qt, QTimer, QDate, QDateTime, QLocale
-from PyQt5.QtGui import QFont
+from PyQt5.QtCore import Qt, QTimer, QLocale
 from ...utils.api_client import APIClient
 
 
@@ -310,17 +309,19 @@ class MainWindow(QMainWindow):
                 self.load_initial_data()
             except Exception as e:
                 QMessageBox.critical(self, "Error", f"Failed to initialize application after login: {str(e)}")
-                else:
+        else:
             QMessageBox.warning(self, "Login Failed", "Invalid username or password")
 
     def load_initial_data(self):
         """Load all initial data after successful login."""
-        try:            self.load_product_list()
+        try:
+            self.load_product_list()
             self.setup_inventory_table()
             self.load_orders_data()
             self.load_categories_data()
             self.load_expenses_data()  # Add this if you have expenses functionality
-            self.update_stats()        except Exception as e:
+            self.update_stats()
+        except Exception as e:
             QMessageBox.warning(self, "Error", f"Failed to load some initial data: {str(e)}")
             import traceback
             traceback.print_exc()

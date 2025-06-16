@@ -162,9 +162,15 @@ def print_receipt(sale_data, logo_path=None):
 
         # Add date and sale number - centered in header section
         date_str = QDateTime.fromString(sale_data['sale_time'], Qt.ISODate).toString('yyyy-MM-dd HH:mm')
+        
+        # Clean up sale ID display - remove any prefix and show just the number
+        display_sale_id = str(sale_data['id'])
+        if '-' in display_sale_id:
+            display_sale_id = display_sale_id.split('-')[-1]
+        
         html += '<div class="header">'
         html += f"Date: {date_str}\n"
-        html += f"Sale : {sale_data['id']}\n\n"  # Added extra newline
+        html += f"Sale : {display_sale_id}\n\n"  # Use cleaned sale ID
         html += '</div>'
         
         # Start items section
@@ -181,7 +187,37 @@ def print_receipt(sale_data, logo_path=None):
         total_items = 0
         total_amount = 0
         for item in sale_data["items"]:
-            product_name = item.get("product_name", "Unknown Product")
+            # Try multiple approaches to get the product name
+            product_name = None
+            
+            # First try: Use product_name from the item if available
+            if item.get("product_name") and item.get("product_name") != "Unknown Product":
+                product_name = item.get("product_name")
+            
+            # Second try: Use name field from the item
+            if not product_name and item.get("name") and item.get("name") != "Unknown Product":
+                product_name = item.get("name")
+            
+            # Third try: Create a descriptive name from available data
+            if not product_name:
+                barcode = item.get("barcode", "")
+                size = item.get("size", "")
+                color = item.get("color", "")
+                
+                if barcode:
+                    # Try to create a meaningful name
+                    if size or color:
+                        parts = []
+                        if color:
+                            parts.append(color)
+                        if size:
+                            parts.append(size)
+                        product_name = f"Item {' '.join(parts)} ({barcode[-6:] if len(barcode) > 6 else barcode})"
+                    else:
+                        product_name = f"Item {barcode[-6:] if len(barcode) > 6 else barcode}"
+                else:
+                    product_name = "Unknown Product"
+            
             quantity = float(item.get("quantity", 1))
             price = float(item.get("price", 0))
             total = price * quantity

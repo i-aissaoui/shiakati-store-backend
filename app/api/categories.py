@@ -18,12 +18,13 @@ def get_db():
 def list_categories(db: Session = Depends(get_db)):
     try:
         categories = db.query(models.Category).all()
+        
         # Calculate products_count for each category
         for category in categories:
             products_count = db.query(models.Product).filter(models.Product.category_id == category.id).count()
             setattr(category, "products_count", products_count)
-        # Explicitly serialize to dicts to avoid tuple/dict mismatch
-        return [Category.model_validate(category).model_dump() for category in categories]
+        
+        return categories
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
